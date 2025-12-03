@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS smart_wallet;
+USE smart_wallet;
+CREATE TABLE IF NOT EXISTS incomes(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  montant DECIMAL(10,2),
+  date DATE DEFAULT (CURRENT_TIME),
+  description TEXT,
+  category VARCHAR(255)
+);
+CREATE TABLE IF NOT EXISTS expences(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  montant DECIMAL(10,2),
+  date DATE DEFAULT (CURRENT_TIME),
+  description TEXT,
+  category VARCHAR(255)
+);
+
+ALTER TABLE incomes ADD userID INT;
+ALTER TABLE expences ADD userID INT;
+
