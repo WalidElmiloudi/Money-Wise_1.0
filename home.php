@@ -18,17 +18,17 @@
   <header class=" w-full justify-between px-3 h-15 flex items-center xl:hidden">
     <i id="menuBg" class="fi fi-br-menu-burger text-3xl text-[#041368]"></i>
     <div class="w-8 h-8 border-2 border-[#041368] flex justify-center items-center rounded-full">
-      <a href="account.html"><i class="fi fi-sc-user text-xl text-[#041368]"></i></a>
+      <a href="account.php"><i class="fi fi-sc-user text-xl text-[#041368]"></i></a>
     </div>
   </header>
   <section id="home" class="grid w-full h-full px-5 xl:px-2 grid-rows-8 xl:grid-cols-8 2xl:grid-cols-12 gap-2 xl:gap-4">
     <div class="xl:order-1 hidden xl:flex row-span-8 col-span-2 2xl:col-span-2 bg-slate-300">
       <div class="w-full h-full flex flex-col justify-center gap-20 pl-10 -mt-5">
         <h1 class=" text-4xl font-bold text-[#041368]"><a href="#">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.html">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.html">Incomes</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.html">Expences</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="account.html">Account</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.php">Dashboard</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.php">Incomes</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.php">Expences</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="account.php">Account</a></h1>
       </div>
     </div>
     <div
@@ -59,9 +59,9 @@
       </div>
       <div class="w-full h-full flex flex-col justify-center gap-20 pl-10 -mt-5">
         <h1 class="homeRedirect text-4xl font-bold text-[#041368]"><a href="#">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.html">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.html">Incomes</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.html">Expences</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.php">Dashboard</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.php">Incomes</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.php">Expences</a></h1>
       </div>
     </div>
   </section>

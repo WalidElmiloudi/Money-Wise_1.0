@@ -18,7 +18,7 @@
   <header class=" w-full justify-between px-3 h-15 flex items-center xl:hidden">
     <i id="menuBg" class="fi fi-br-menu-burger text-3xl text-[#041368]"></i>
     <div class="w-8 h-8 border-2 border-[#041368] flex justify-center items-center rounded-full">
-      <i class="fi fi-sc-user text-xl text-[#041368]"></i>
+     <a href="account.php"><i class="fi fi-sc-user text-xl text-[#041368]"></i></a>
     </div>
   </header>
   <section id="menu"
@@ -29,10 +29,10 @@
         <i id="closeMenu" class="fi fi-br-cross text-3xl text-[#041368]"></i>
       </div>
       <div class="w-full h-full flex flex-col justify-center gap-20 pl-10 -mt-5">
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.html">Home</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.php">Home</a></h1>
         <h1 class=" text-4xl font-bold text-[#041368]"><a href="#">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.html">Incomes</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.html">Expences</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.php">Incomes</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.php">Expences</a></h1>
       </div>
     </div>
   </section>
@@ -41,11 +41,11 @@
     <div class="w-full h-full grid grid-cols-2 xl:grid-cols-14 grid-rows-8 gap-2 px-2">
       <div class="xl:order-1 hidden xl:flex col-span-3 row-span-8 bg-slate-300 shadow-md rounded-md">
         <div class="w-full h-full flex flex-col justify-center gap-20 pl-10 -mt-5">
-          <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.html">Home</a></h1>
+          <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.php">Home</a></h1>
           <h1 class=" text-4xl font-bold text-[#041368]"><a href="#">Dashboard</a></h1>
-          <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.html">Incomes</a></h1>
-          <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.html">Expences</a></h1>
-          <h1 class="text-4xl font-bold text-[#041368]"><a href="account.html">Account</a></h1>
+          <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.php">Incomes</a></h1>
+          <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.php">Expences</a></h1>
+          <h1 class="text-4xl font-bold text-[#041368]"><a href="account.php">Account</a></h1>
         </div>
       </div>
       <div class="xl:order-2 col-span-1 xl:col-span-4 xl:row-span-2 row-span-2 bg-slate-300 shadow-md rounded-md"></div>

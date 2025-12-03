@@ -26,19 +26,19 @@
         <i id="closeMenu" class="fi fi-br-cross text-3xl text-[#041368]"></i>
       </div>
       <div class="w-full h-full flex flex-col justify-center gap-20 pl-10 -mt-5">
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.html">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.html">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.html">Incomes</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.html">Expences</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.php">Home</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.php">Dashboard</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.php">Incomes</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.php">Expences</a></h1>
       </div>
     </div>
   </section>
   <main id="account" class="w-full h-full flex flex-col xl:flex-row gap-4 items-center" aria-hidden="true">
     <div class="hidden w-[30%] bg-slate-300 h-full xl:flex flex-col justify-center gap-20 pl-10">
-      <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.html">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.html">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.html">Incomes</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.html">Expences</a></h1>
+      <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.php">Home</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.php">Dashboard</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.php">Incomes</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="expences.php">Expences</a></h1>
       <h1 class=" text-4xl font-bold text-[#041368]"><a href="#">Account</a></h1>
     </div>
     <div class="w-full h-full xl:py-1 flex flex-col items-center gap-3">

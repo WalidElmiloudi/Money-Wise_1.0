@@ -18,3 +18,4 @@ CREATE TABLE IF NOT EXISTS expences(
 ALTER TABLE incomes ADD userID INT;
 ALTER TABLE expences ADD userID INT;
 
+select * from incomes;

@@ -18,7 +18,7 @@
   <header class=" w-full justify-between px-3 h-15 flex items-center xl:hidden">
     <i id="menuBg" class="fi fi-br-menu-burger text-3xl text-[#041368]"></i>
     <div class="w-8 h-8 border-2 border-[#041368] flex justify-center items-center rounded-full">
-      <a href="account.html"><i class="fi fi-sc-user text-xl text-[#041368]"></i></a>
+      <a href="account.php"><i class="fi fi-sc-user text-xl text-[#041368]"></i></a>
     </div>
   </header>
   <section id="menu"
@@ -29,20 +29,20 @@
         <i id="closeMenu" class="fi fi-br-cross text-3xl text-[#041368]"></i>
       </div>
       <div class="w-full h-full flex flex-col justify-center gap-20 pl-10 -mt-5">
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.html">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.html">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.html">Incomes</a></h1>
-        <h1 class=text-4xl font-bold text-[#041368]"><a href="#">Expences</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.php">Home</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.php">Dashboard</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.php">Incomes</a></h1>
+        <h1 class="text-4xl font-bold text-[#041368]"><a href="#">Expences</a></h1>
       </div>
     </div>
   </section>
   <main id="expences" class="w-full h-full flex flex-col xl:flex-row  gap-4" aria-hidden="true">
     <div class="hidden w-[30%] bg-slate-300 h-full xl:flex flex-col justify-center gap-20 pl-10">
-      <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.html">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.html">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.html">Incomes</a></h1>
+      <h1 class=" text-4xl font-bold text-[#041368]"><a href="home.php">Home</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="dashboard.php">Dashboard</a></h1>
+        <h1 class=" text-4xl font-bold text-[#041368]"><a href="incomes.php">Incomes</a></h1>
         <h1 class=" text-4xl font-bold text-[#041368]"><a href="#">Expences</a></h1>
-      <h1 class=" text-4xl font-bold text-[#041368]"><a href="account.html">Account</a></h1>
+      <h1 class=" text-4xl font-bold text-[#041368]"><a href="account.php">Account</a></h1>
     </div>
     <div class="w-full h-full xl:py-1">
       <h1 class="text-4xl font-bold text-[#041368] pl-5 xl:hidden">Expences</h1>
@@ -58,14 +58,14 @@
       class="overlay fixed w-full h-full bg-black/20 backdrop-filter backdrop-blur-xs hidden justify-center items-center"
       aria-hidden="true">
       <div
-        class="w-[80%] h-[60%] xl:w-[50%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
+        class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
         <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="" method="post">
-          <label for="amount" class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-24">Amount
+          <label for="amount" class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Amount
             :</label>
           <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
             title="ex : x.xx">
           <label for="category"
-            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-24">Category</label>
+            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Category</label>
           <select class="py-2 pl-2 w-[80%] bg-white rounded-md" name="category" id="category">
             <option value="Housing"
               title="Rent or mortgage payments, property taxes, and homeowner's or renter's insurance.">Housing</option>
@@ -91,7 +91,7 @@
             <option value="Other" title="Other causes of expence">Other</option>
           </select>
           <label for="description"
-            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-24">Description
+            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Description
             : </label>
           <textarea class="py-1 pl-2 w-[80%] h-40 bg-white resize-none rounded-md" name="description"
             id="description"></textarea>
@@ -105,14 +105,14 @@
       class="overlay fixed w-full h-full bg-black/20 backdrop-filter backdrop-blur-xs hidden justify-center items-center"
       aria-hidden="true">
       <div
-        class="w-[80%] h-[60%] xl:w-[50%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
+        class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
         <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="" method="post">
-          <label for="amount" class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-24">Amount
+          <label for="amount" class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Amount
             :</label>
           <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
             title="ex : x.xx">
           <label for="category"
-            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-24">Category</label>
+            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Category</label>
           <select class="py-2 pl-2 w-[80%] bg-white rounded-md" name="category" id="category">
             <option value="Housing"
               title="Rent or mortgage payments, property taxes, and homeowner's or renter's insurance.">Housing</option>
@@ -138,7 +138,7 @@
             <option value="Other" title="Other causes of expence">Other</option>
           </select>
           <label for="description"
-            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-24">Description
+            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Description
             : </label>
           <textarea class="py-1 pl-2 w-[80%] h-40 bg-white resize-none rounded-md" name="description"
             id="description"></textarea>
