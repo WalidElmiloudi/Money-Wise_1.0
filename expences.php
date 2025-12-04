@@ -49,32 +49,41 @@
       <h1 class="text-4xl font-bold text-[#041368] pl-5 xl:hidden">Expences</h1>
       <div class="w-full h-full flex flex-col items-center gap-4">
         <div class="w-90 h-160 xl:h-[90%] xl:w-[80%] bg-slate-100 rounded-md xl:order-2 flex flex-col items-center py-2 gap-2 overflow-scroll [scrollbar-width:none]">
-  <?php
+   <?php
 
-      $host     = "localhost";
-      $user     = "root";
-      $password = "";
-      $db       = "smart_wallet";
+       $host     = "localhost";
+       $user     = "root";
+       $password = "";
+       $db       = "smart_wallet";
 
-      $conn   = new mysqli($host, $user, $password, $db);
-      $result = $conn->query("SELECT * FROM expences");
-      if ($result->num_rows > 0) {
-          while ($expence = $result->fetch_assoc()) {
-              echo "<div class='w-[90%] h-20 bg-white rounded-md flex flex-row justify-between px-1'>
-            <div class='h-full flex flex-col justify-center items-start px-2'>
-              <h1 class='text-[#041368] text-2xl font-bold'>" . $expence['montant'] . "$</h1>
-              <h2 class='text-[#041368] text-xl'>" . $expence['date'] . "</h2>
-            </div>
-              <div class='flex flex-col justify-center h-full gap-1'>
-                <a href='delete.php?id=" . $expence['id'] . "&target=expences'><button class='bg-red-500 py-1 px-2 text-white font-bold text-xl rounded-md'><i class='fi fi-rc-trash'></i></button></a>
-                <button class='bg-green-500 py-1 px-2 text-white font-bold text-xl rounded-md'><i class='fi fi-sc-pencil'></i></button>
-              </div>
-          </div>";
-          }
-      } else{
-        echo "<h1 class='text-xl font-bold text-[#041368]'>You have no expences !</h1>";
-      }
-  ?>
+       $conn   = new mysqli($host, $user, $password, $db);
+       $id     = 0;
+       $result = $conn->query("SELECT * FROM expences");
+       if ($result->num_rows > 0) {
+           while ($expence = $result->fetch_assoc()) {
+               $id = $expence['id'];
+           ?>
+<div class="w-[90%] h-20 bg-white rounded-md flex flex-row justify-between px-1">
+    <div class="h-full flex flex-col justify-center items-start px-2">
+        <h1 class="text-[#041368] text-2xl font-bold"><?php echo $expence['montant'] ?>$</h1>
+        <h2 class="text-[#041368] text-xl"><?php echo $expence['date'] ?></h2>
+    </div>
+
+    <div class="flex flex-col justify-center h-full gap-1">
+        <button id="btn" onclick="deleteModal(<?php echo $id ?>,'expences')"
+            class="bg-red-500 py-1 px-2 text-white font-bold text-xl rounded-md cursor-pointer">
+            <i class="fi fi-rc-trash"></i>
+        </button>
+
+        <button class="bg-green-500 py-1 px-2 text-white font-bold text-xl rounded-md cursor-pointer">
+            <i class="fi fi-sc-pencil"></i>
+        </button>
+    </div>
+</div>
+
+                 <?php }
+                     }
+                 ?>
         </div>
         <button id="addExpenceBtn" class="px-2 py-1 text-white font-bold text-xl bg-red-500 rounded-md xl:order-1 xl:text-2xl cursor-pointer">Add an
           expence</button>
@@ -174,17 +183,7 @@
           class="w-10 h-10 bg-red-500 text-white text-xl font-bold rounded-full absolute -top-2 -right-2 xl:text-2xl">X</button>
       </div>
     </section>
-    <section id="delete"
-      class="fixed w-full h-full bg-black/20 backdrop-filter backdrop-blur-xs hidden justify-center items-center"
-      aria-hidden="">
-      <div class="w-70 h-50 bg-slate-100 rounded-md flex flex-col items-center justify-center gap-4">
-        <p class="text-3xl font-bold text-[#041368]">Are you sure ?</p>
-        <div class=" w-50 flex justify-between items-center">
-          <button class="py-1 px-2 rounded-md bg-green-400 text-white text-2xl font-bold">Cancel</button>
-          <button class="py-1 px-2 rounded-md bg-red-500 text-white text-2xl font-bold">Delete</button>
-        </div>
-      </div>
-    </section>
   </main>
   <script src="script.js"></script>
 </body>
+</html>

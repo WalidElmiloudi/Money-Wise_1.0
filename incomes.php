@@ -71,9 +71,8 @@
     </div>
 
     <div class="flex flex-col justify-center h-full gap-1">
-        <button id="btn" onclick="deleteModal(<?php echo $id?>,'incomes')"
-            class="bg-red-500 py-1 px-2 text-white font-bold text-xl rounded-md cursor-pointer"
-            table-name="incomes">
+        <button id="btn" onclick="deleteModal(<?php echo $id ?>,'incomes')"
+            class="bg-red-500 py-1 px-2 text-white font-bold text-xl rounded-md cursor-pointer">
             <i class="fi fi-rc-trash"></i>
         </button>
 
