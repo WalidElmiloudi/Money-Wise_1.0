@@ -75,7 +75,7 @@
             <i class="fi fi-rc-trash"></i>
         </button>
 
-        <button class="bg-green-500 py-1 px-2 text-white font-bold text-xl rounded-md cursor-pointer">
+        <button onclick="editModal(<?php echo $id ?>,<?php echo $expence['montant'] ?>,'<?php echo $expence['description'] ?>','expences')" class="bg-green-500 py-1 px-2 text-white font-bold text-xl rounded-md cursor-pointer">
             <i class="fi fi-sc-pencil"></i>
         </button>
     </div>
@@ -134,53 +134,6 @@
         </form>
         <button id="closeExpenceModal"
           class="w-10 h-10 bg-red-500 text-white text-xl font-bold rounded-full absolute -top-2 -right-2 xl:text-2xl cursor-pointer">X</button>
-      </div>
-    </section>
-    <section id="expenceEditModal"
-      class="overlay fixed w-full h-full bg-black/20 backdrop-filter backdrop-blur-xs hidden justify-center items-center"
-      aria-hidden="true">
-      <div
-        class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
-        <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="expenceHandler.php" method="post">
-          <label for="amount" class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Amount
-            :</label>
-          <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
-            title="ex : x.xx">
-          <label for="category"
-            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Category</label>
-          <select class="py-2 pl-2 w-[80%] bg-white rounded-md" name="category" id="category">
-            <option value="Housing"
-              title="Rent or mortgage payments, property taxes, and homeowner's or renter's insurance.">Housing</option>
-            <option value="Utilities" title="Electricity, water, gas, internet, and phone bills.">Utilities</option>
-            <option value="Food" title="Groceries and meals prepared at home.">Food</option>
-            <option value="Transportation"
-              title="Car payments, fuel, public transit passes, maintenance, insurance, and parking fees.">
-              Transportation
-            </option>
-            <option value="Healthcare"
-              title="Insurance premiums, out-of-pocket medical costs, prescriptions, and dental care.">Healthcare
-            </option>
-            <option value="Debt Payments" title="Student loans, credit card payments, and other loans.">Debt Payments
-            </option>
-            <option value="Personal Care" title="Toiletries, haircuts, and grooming services.">Personal Care</option>
-            <option value="Clothing" title="New apparel and shoes.">Clothing</option>
-            <option value="Entertainment and Recreation" title="Streaming services, hobbies, movies, or dining out.">
-              Entertainment and Recreation</option>
-            <option value="Family and Pet Care" title="Childcare, pet food, and veterinary costs.">Family and Pet Care
-            </option>
-            <option value="Miscellaneous" title="Gifts, travel, household supplies, and other irregular costs.">
-              Miscellaneous</option>
-            <option value="Other" title="Other causes of expence">Other</option>
-          </select>
-          <label for="description"
-            class="text-xl font-bold text-[#041368] self-start pl-8 xl:pl-16 2xl:pl-20">Description
-            : </label>
-          <textarea class="py-1 pl-2 w-[80%] h-40 bg-white resize-none rounded-md" name="description"
-            id="description"></textarea>
-          <button type="submit" class="py-1 px-2 bg-green-600 text-white rounded-md xl:text-xl font-bold">EDIT</button>
-        </form>
-        <button
-          class="w-10 h-10 bg-red-500 text-white text-xl font-bold rounded-full absolute -top-2 -right-2 xl:text-2xl">X</button>
       </div>
     </section>
   </main>
