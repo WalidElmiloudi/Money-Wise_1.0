@@ -18,4 +18,4 @@ CREATE TABLE IF NOT EXISTS expences(
 ALTER TABLE incomes ADD userID INT;
 ALTER TABLE expences ADD userID INT;
 
-select sum(montant) from incomes;
+select * from incomes;

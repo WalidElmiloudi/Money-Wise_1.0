@@ -1,6 +1,6 @@
 <?php
 
-require 'config.php';
+    require 'config.php';
 
 ?>
 <!DOCTYPE html>
@@ -18,9 +18,10 @@ require 'config.php';
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css'>
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-chubby/css/uicons-solid-chubby.css'>
+
 </head>
 
-<body class="w-full h-screen flex flex-col bg-slate-100 font-['open_sans']">
+<body class="w-full h-screen flex flex-col bg-slate-100 font-['open_sans'] text-[#021c3b]">
   <header class=" w-full justify-between px-3 h-15 flex items-center xl:hidden">
     <i id="menuBg" class="fi fi-br-menu-burger text-3xl text-[#021c3b]"></i>
     <div class="w-8 h-8 border-2 border-[#021c3b] flex justify-center items-center rounded-full">
@@ -49,42 +50,48 @@ require 'config.php';
         <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="expences.php">Expences</a></h1>
       <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="account.php">Account</a></h1>
     </div>
-    <div class="w-full h-full xl:py-1 overflow-hidden">
-      <h1 class="text-4xl font-bold text-[#021c3b] pl-5 xl:hidden">Incomes</h1>
-      <div class="w-full h-full  flex flex-col items-center gap-4">
-        <div class="w-90 h-160 xl:h-[90%] xl:w-[80%] bg-slate-50 rounded-md xl:order-2 flex flex-col items-center py-2 gap-2 overflow-scroll [scrollbar-width:none]">
-          <?php
-              $id     = 0;
+    <div class ="w-full h-full bg-[#f2f4f7] flex justify-center items-center">
+       <div class = "w-[90%] h-[90%] bg-white rounded-lg flex flex-col justify-center gap-2 items-center p-4">
+          <h1 class="text-3xl  xl:text-4xl text-[#021c3b] font-bold self-start">Incomes</h1>
+          <div class="w-[90%]  h-[90%] flex flex-col items-center py-2 shadow-lg">
+           <div class="w-full grid grid-cols-10 grid-rows-1">
+            <div class="col-span-2 border-b border-r text-[8px] 2xl:text-2xl text-center font-bold break-words xl:text-base py-2">Amount</div>
+            <div class="col-span-2 border-b border-r text-[8px] 2xl:text-2xl text-center font-bold break-words xl:text-base py-2">Category</div>
+            <div class="col-span-2 border-b border-r text-[8px] 2xl:text-2xl text-center font-bold break-words xl:text-base py-2">Description</div>
+            <div class="col-span-2 border-b border-r text-[8px] 2xl:text-2xl text-center font-bold break-words xl:text-base py-2">Registiration date</div>
+            <div class="col-span-2 border-b text-[8px] 2xl:text-2xl text-center font-bold break-words xl:text-base py-2">Actions</div>
+           </div>
+           <div class="w-full h-full  overflow-scroll [scrollbar-width:none]">
+                     <div class="w-full grid grid-cols-10 grid-rows-1 py-2 px-1 bg-[#f2f4f7]">
+                       <?php $id     = 0;
               $result = $conn->query("SELECT * FROM incomes");
               if ($result->num_rows > 0) {
                   while ($income = $result->fetch_assoc()) {
                       $id = $income['id'];
                   ?>
-<div class="w-[90%] h-20 bg-white rounded-md flex flex-row justify-between px-1">
-    <div class="h-full flex flex-col justify-center items-start px-2">
-        <h1 class="text-[#021c3b] text-2xl font-bold"><?php echo $income['montant'] ?>$</h1>
-        <h2 class="text-[#021c3b] text-xl"><?php echo $income['date'] ?></h2>
-    </div>
-
-    <div class="flex flex-col justify-center h-full gap-1">
-        <button id="btn" onclick="deleteModal(<?php echo $id ?>,'incomes')"
-            class="bg-red-500 py-1 px-2 text-white font-bold text-xl rounded-md cursor-pointer">
-            <i class="fi fi-rc-trash"></i>
+            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $income['montant'] ?>$</div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $income['category'] ?></div>
+            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $income['description'] ?></div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $income['date'] ?></div>
+            <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
+              <button id="btn" onclick="deleteModal(<?php echo $id ?>,'incomes')"
+            class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
+            delete
         </button>
-
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','incomes')" class="bg-green-500 py-1 px-2 text-white font-bold text-xl rounded-md cursor-pointer">
-            <i class="fi fi-sc-pencil"></i>
+        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','incomes','')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+            edit
         </button>
-    </div>
-</div>
-
-                 <?php }
+            </div>
+            <?php }
                      }
                  ?>
+           </div>
+          </div>
         </div>
-        <button id="addIncome" class="py-1 px-2 text-white font-bold text-xl bg-blue-500 rounded-md xl:order-1 xl:text-2xl cursor-pointer">Add an
+          <button id="addIncome" class="py-1 px-2 text-white font-bold text-xl bg-blue-500 rounded-md xl:order-1 xl:text-2xl cursor-pointer">Add an
           income</button>
-      </div>
+       </div>
+       
     </div>
     <section id="incomeAddModal"
       class="overlay fixed w-full h-full bg-black/20 backdrop-filter backdrop-blur-xs hidden justify-center items-center"

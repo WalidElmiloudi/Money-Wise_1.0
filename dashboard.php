@@ -63,7 +63,7 @@
               $monthResult       = $conn->query("SELECT SUM(montant) AS total FROM incomes WHERE MONTH(date) = MONTH(CURDATE()) and YEAR(date) = YEAR(CURDATE())");
               if ($monthResult) {
                   $amount            = $monthResult->fetch_assoc();
-                  $monthTotalIncomes = $amount['total'];
+                  $monthTotalIncomes = $amount['total']>0 ? $amount['total']:0;
               }
               $result = $conn->query("SELECT SUM(montant) AS total FROM incomes");
 
@@ -73,14 +73,7 @@
               ?>
                   <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
                   <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Incomes:  </h1>
-                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl font-bold text-green-600" >                                                                                                                                                                                                                                                                                                                                                                                     <?php echo $amount['total'] ?> $ </h1>
-                  </div >
-               <?php
-                   } else {
-                   ?>
-                  <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
-                  <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Incomes:  </h1>
-                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl  font-bold text-green-600 pl-5" > 0.00 $ </h1>
+                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl font-bold text-green-600" ><?php echo ($amount['total']>0 ? $amount['total'] : 0) ?> $ </h1>
                   </div >
                <?php
                    }
@@ -96,7 +89,7 @@
                   $monthResult        = $conn->query("SELECT SUM(montant) AS total FROM expences WHERE MONTH(date) = MONTH(CURDATE()) and YEAR(date) = YEAR(CURDATE())");
                   if ($monthResult) {
                       $amount             = $monthResult->fetch_assoc();
-                      $monthTotalExpences = $amount['total'];
+                      $monthTotalExpences = $amount['total']>0 ? $amount['total']:0;
                   }
                   if ($result) {
                       $amount        = $result->fetch_assoc();
@@ -104,14 +97,7 @@
                   ?>
                   <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
                   <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Expences:  </h1>
-                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl  font-bold text-red-600 pl-5" >                                                                                                                                                                                                                                                                                                                                                                                                     <?php echo $amount['total'] ?> $ </h1>
-                  </div >
-               <?php
-                   } else {
-                   ?>
-                  <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
-                  <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Expences:  </h1>
-                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl  font-bold text-red-600 pl-5" > 0.00 $ </h1>
+                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl  font-bold text-red-600 pl-5" ><?php echo ($amount['total']>0 ? $amount['total'] : 0) ?> $ </h1>
                   </div >
                <?php
                    }

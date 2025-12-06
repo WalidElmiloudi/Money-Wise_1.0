@@ -95,7 +95,7 @@ function deleteModal(id,table){
       </div>`;
   main.appendChild(newSection);
 }
-function editModal(id,amount,description,table){
+function editModal(id,amount,description,table,category){
    const newSection = document.createElement("section");
     newSection.classList.add("fixed", "w-full", "h-full", "bg-black/20", "backdrop-filter", "backdrop-blur-xs", "flex", "justify-center", "items-center","overlay");
     newSection.innerHTML = `<div class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
@@ -106,13 +106,13 @@ function editModal(id,amount,description,table){
         <label for="category"
           class="text-xl font-bold text-[#021c3b] self-start pl-8 xl:pl-16 2xl:pl-20">Category</label>
         <select class="py-2 pl-2 w-[80%] bg-white rounded-md" name="category" id="category">
-          <option value="Salary"
+          <option value="Salary" 
             title="This is income you earn from a job, where you are paid an hourly rate to complete set tasks. The more hours you work, the more money you earn.">
             Salary</option>
-          <option value="Wages"
-            title="Similar to wages, this is money you earn from a job. Your annual salary is usually set out in a contract and paid either weekly, fortnightly or monthly. Usually the amount is regular and you won’t earn more for extra hours worked.">
+          <option value="Wages" 
+            title="Similar to wages, this is money you earn from a job. Your annual salary is usually set out in a contract and paid either weekly, fortnightly or monthly. Usually the amount is regular and you won’t earn more for extra hours worked." >
             Wages</option>
-          <option value="Commission"
+          <option value="Commission" 
             title="Commission is where you earn money for completing a task. This is common in sales roles. You might earn a set amount of money for each sale you make or you might earn a percentage of a sale price for your work. Commission is based on results rather than time worked.">
             Commission</option>
           <option value="Selling something"
@@ -139,5 +139,7 @@ function editModal(id,amount,description,table){
         class="cursor-pointer w-10 h-10 bg-red-500 text-white text-xl font-bold rounded-full absolute -top-2 -right-2 xl:text-2xl">X</button></a>
     </div>`;
   main.appendChild(newSection);
+  const select = document.getElementById("category");
+  select.value = category;
 }
 
