@@ -1,7 +1,7 @@
 <?php
 
     require 'config.php';
-
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css'>
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-chubby/css/uicons-solid-chubby.css'>
-
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 </head>
 
 <body class="w-full h-screen flex flex-col bg-slate-100 font-['open_sans'] text-[#021c3b]">
@@ -52,7 +52,94 @@
     </div>
     <div class ="w-full h-full bg-[#f2f4f7] flex justify-center items-center">
        <div class = "w-[90%] h-[90%] bg-white rounded-lg flex flex-col justify-center gap-2 items-center p-4">
+        <div class="w-full flex flex-row items-center justify-between xl:px-10 2xl:px-16">
           <h1 class="text-3xl  xl:text-4xl text-[#021c3b] font-bold self-start">Incomes</h1>
+          <div class="relative">
+              <i id="filterBtn" class="fi fi-rr-filter"></i>
+              <div id="filter" class="w-30 h-40 xl:w-50 xl:h-60 bg-gray-200 absolute right-0 rounded-md shadow-lg hidden">
+   <form class="h-full flex flex-col gap-2 p-2 xl:justify-around" action="filter.php?target=incomes" method = "post">
+              <label for="category" class="text-xs font-bold xl:text-lg">Category :</label>
+              <select class="bg-white rounded-sm cursor-pointer text-[12px] xl:text-base" name="category" id="categoryFilter">
+                <option value="All"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "All" ? "selected" : "");}?>>
+                          All</option>
+                <option value="Salary"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Salary" ? "selected" : "");}?>
+                        title="This is income you earn from a job, where you are paid an hourly rate to complete set tasks. The more hours you work, the more money you earn.">
+                          Salary</option>
+                <option value="Wages"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Wages" ? "selected" : "");}?>
+                        title="Similar to wages, this is money you earn from a job. Your annual salary is usually set out in a contract and paid either weekly, fortnightly or monthly. Usually the amount is regular and you won’t earn more for extra hours worked.">
+                          Wages</option>
+                <option value="Commission"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Commission" ? "selected" : "");}?>
+                        title="Commission is where you earn money for completing a task. This is common in sales roles. You might earn a set amount of money for each sale you make or you might earn a percentage of a sale price for your work. Commission is based on results rather than time worked.">
+                          Commission</option>
+                <option value="Selling something"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Selling something" ? "selected" : "");}?>
+                        title="Maybe you’re handy with a needle and thread or you’re a gifted mathematician. You might have a tonne of stuff you don’t want anymore. Selling things you make, your skills as a service or stuff you own and no longer want are all potential ways to bring in some cash.">
+                          Selling something</option>
+                <option value="Gifts"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Gifts" ? "selected" : "");}?>
+                        title="Who doesn’t love a cash present? Birthdays and Christmas can be a great and sometimes unexpected source of income.">
+                          Gifts</option>
+                <option value="Allowance"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Allowance" ? "selected" : "");}?>
+                        title="Money your grown-ups give you on a regular basis. They may or may not expect you to do jobs in return for the moola.">
+                          Allowance</option>
+                <option value="Government Payments"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Government Payments" ? "selected" : "");}?>
+                        title="Depending on your situation you may be eligible for assistance payments from the government.">
+                          Government Payments</option>
+                <option value="Other"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Other" ? "selected" : "");}?> title="Other source of income">Other</option>
+              </select>
+              <label for="date" class="text-xs font-bold xl:text-lg">Date :</label>
+              <select class="bg-white rounded-sm cursor-pointer" name="date" id="dateFilter">
+                <option value="All"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "All" ? "selected" : "");}?> >All</option>
+                <option value="CURMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURMONTH" ? "selected" : "");}?>>This Month</option>
+                <option value="LASMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASMONTH" ? "selected" : "");}?>>Last Month</option>
+                <option value="CURYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURYEAR" ? "selected" : "");}?>>This Year</option>
+                <option value="LASYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASYEAR" ? "selected" : "");}?>>Last Year</option>
+              </select>
+              <button type="submit" class="py-1 px-2 text-xs xl:text-base bg-blue-500 text-white font-bold rounded-md cursor-pointer">Apply</button>
+            </form>
+              </div>
+          </div>
+          <div class="hidden 2xl:flex w-full  flex-row items-center justify-end gap-2">
+            <h1 class="text-xl font-bold">Filter : </h1>
+            <form class="flex items-center gap-2" action="filter.php?target=incomes" method = "post">
+              <label for="category" class="text-lg font-bold">Category :</label>
+              <select class="bg-[#f2f4f7] rounded-md cursor-pointer" name="category" id="categoryFilter">
+                <option value="All"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "All" ? "selected" : "");}?>>
+                          All</option>
+                <option value="Salary"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Salary" ? "selected" : "");}?>
+                        title="This is income you earn from a job, where you are paid an hourly rate to complete set tasks. The more hours you work, the more money you earn.">
+                          Salary</option>
+                <option value="Wages"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Wages" ? "selected" : "");}?>
+                        title="Similar to wages, this is money you earn from a job. Your annual salary is usually set out in a contract and paid either weekly, fortnightly or monthly. Usually the amount is regular and you won’t earn more for extra hours worked.">
+                          Wages</option>
+                <option value="Commission"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Commission" ? "selected" : "");}?>
+                        title="Commission is where you earn money for completing a task. This is common in sales roles. You might earn a set amount of money for each sale you make or you might earn a percentage of a sale price for your work. Commission is based on results rather than time worked.">
+                          Commission</option>
+                <option value="Selling something"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Selling something" ? "selected" : "");}?>
+                        title="Maybe you’re handy with a needle and thread or you’re a gifted mathematician. You might have a tonne of stuff you don’t want anymore. Selling things you make, your skills as a service or stuff you own and no longer want are all potential ways to bring in some cash.">
+                          Selling something</option>
+                <option value="Gifts"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Gifts" ? "selected" : "");}?>
+                        title="Who doesn’t love a cash present? Birthdays and Christmas can be a great and sometimes unexpected source of income.">
+                          Gifts</option>
+                <option value="Allowance"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Allowance" ? "selected" : "");}?>
+                        title="Money your grown-ups give you on a regular basis. They may or may not expect you to do jobs in return for the moola.">
+                          Allowance</option>
+                <option value="Government Payments"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Government Payments" ? "selected" : "");}?>
+                        title="Depending on your situation you may be eligible for assistance payments from the government.">
+                          Government Payments</option>
+                <option value="Other"<?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Other" ? "selected" : "");}?> title="Other source of income">Other</option>
+              </select>
+              <label for="date" class="text-lg font-bold">Date :</label>
+              <select class="bg-[#f2f4f7] rounded-md cursor-pointer" name="date" id="dateFilter">
+                <option value="All"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "All" ? "selected" : "");}?> >All</option>
+                <option value="CURMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURMONTH" ? "selected" : "");}?>>This Month</option>
+                <option value="LASMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASMONTH" ? "selected" : "");}?>>Last Month</option>
+                <option value="CURYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURYEAR" ? "selected" : "");}?>>This Year</option>
+                <option value="LASYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASYEAR" ? "selected" : "");}?>>Last Year</option>
+              </select>
+              <button type="submit" class="py-1 px-2 bg-blue-500 text-white font-bold rounded-md cursor-pointer">Apply</button>
+            </form>
+          </div>
+        </div>
+
           <div class="w-[90%]  h-[90%] flex flex-col items-center py-2 shadow-lg">
            <div class="w-full grid grid-cols-10 grid-rows-1">
             <div class="col-span-2 border-b border-r text-[8px] 2xl:text-2xl text-center font-bold break-words xl:text-base py-2">Amount</div>
@@ -63,12 +150,33 @@
            </div>
            <div class="w-full h-full  overflow-scroll [scrollbar-width:none]">
                      <div class="w-full grid grid-cols-10 grid-rows-1 py-2 px-1 bg-[#f2f4f7]">
-                       <?php $id     = 0;
-              $result = $conn->query("SELECT * FROM incomes");
-              if ($result->num_rows > 0) {
-                  while ($income = $result->fetch_assoc()) {
-                      $id = $income['id'];
-                  ?>
+                       <?php $id = 0;
+                           if (isset($_SESSION['filteredArray'])) {
+                               foreach ($_SESSION['filteredArray'] as $row) {
+
+                                   $id = $row['id'];
+                               ?>
+            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $row['montant'] ?>$</div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $row['category'] ?></div>
+            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $row['description'] ?></div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $row['date'] ?></div>
+            <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
+              <button id="btn" onclick="deleteModal(<?php echo $id ?>,'incomes')"
+            class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
+            delete
+        </button>
+        <button onclick="editModal(<?php echo $id ?>,<?php echo $row['montant'] ?>,'<?php echo $row['description'] ?>','incomes','<?php echo $row['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+            edit
+        </button>
+            </div>
+            <?php
+                    }
+                } else {
+                    $result = $conn->query("SELECT * FROM incomes");
+                    if ($result->num_rows > 0) {
+                        while ($income = $result->fetch_assoc()) {
+                            $id = $income['id'];
+                        ?>
             <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $income['montant'] ?>$</div>
             <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $income['category'] ?></div>
             <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $income['description'] ?></div>
@@ -78,20 +186,23 @@
             class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
             delete
         </button>
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','incomes','')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','incomes','<?php echo $row['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
             edit
         </button>
             </div>
             <?php }
-                     }
-                 ?>
+                        
+                    }
+                }
+                session_unset();
+            ?>
            </div>
           </div>
         </div>
           <button id="addIncome" class="py-1 px-2 text-white font-bold text-xl bg-blue-500 rounded-md xl:order-1 xl:text-2xl cursor-pointer">Add an
           income</button>
        </div>
-       
+
     </div>
     <section id="incomeAddModal"
       class="overlay fixed w-full h-full bg-black/20 backdrop-filter backdrop-blur-xs hidden justify-center items-center"

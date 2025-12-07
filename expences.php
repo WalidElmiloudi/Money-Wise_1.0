@@ -1,3 +1,8 @@
+<?php
+
+    require 'config.php';
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +18,7 @@
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css'>
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-chubby/css/uicons-solid-chubby.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 </head>
 
 <body class="w-full h-screen flex flex-col bg-slate-100 font-['open_sans']">
@@ -36,7 +42,7 @@
       </div>
     </div>
   </section>
-  <main id="expences" class="w-full h-full flex flex-col xl:flex-row  gap-4" aria-hidden="true">
+  <main id="expences" class="w-full h-full flex flex-col xl:flex-row  gap-4">
     <div class="hidden w-[30%] bg-white h-full xl:flex flex-col justify-center gap-20 pl-10">
       <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="home.php">Home</a></h1>
         <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="dashboard.php">Dashboard</a></h1>
@@ -46,7 +52,79 @@
     </div>
     <div class ="w-full h-full bg-[#f2f4f7] flex justify-center items-center">
        <div class = "w-[90%] h-[90%] bg-white rounded-lg flex flex-col justify-center gap-2 items-center p-4">
-          <h1 class="text-3xl  xl:text-4xl text-[#021c3b] font-bold self-start">Incomes</h1>
+          <div class="w-full flex flex-row justify-between xl:px-10 2xl:px-16">
+          <h1 class="text-3xl  xl:text-4xl text-[#021c3b] font-bold self-start">Expences</h1>
+          <div class="relative">
+              <i id="filterBtn" class="fi fi-rr-filter"></i>
+              <div id="filter" class="w-30 h-40 xl:w-50 xl:h-60 bg-gray-200 absolute right-0 rounded-md shadow-lg hidden">
+   <form class="h-full flex flex-col gap-2 p-2 xl:justify-around" action="filter.php?target=expences" method = "post">
+              <label for="category" class="text-xs font-bold xl:text-lg">Category :</label>
+              <select class="bg-white rounded-sm cursor-pointer text-[12px]" name="category" id="categoryFilter">
+                <option value="All" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "All" ? "selected" : "");}?>>All</option>
+                <option value="Housing" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Housing" ? "selected" : "");}?>
+                        title="Rent or mortgage payments, property taxes, and homeowner's or renter's insurance.">Housing</option>
+                <option value="Utilities" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Utilities" ? "selected" : "");}?> title="Electricity, water, gas, internet, and phone bills.">Utilities</option>
+                <option value="Food" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Food" ? "selected" : "");}?> title="Groceries and meals prepared at home.">Food</option>
+                <option value="Transportation" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Transportation" ? "selected" : "");}?>
+                        title="Car payments, fuel, public transit passes, maintenance, insurance, and parking fees.">
+                          Transportation</option>
+                <option value="Healthcare" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Healthcare" ? "selected" : "");}?>
+                        title="Insurance premiums, out-of-pocket medical costs, prescriptions, and dental care.">Healthcare</option>
+                <option value="Debt Payments" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Debt Payments" ? "selected" : "");}?> title="Student loans, credit card payments, and other loans.">Debt Payments</option>
+                <option value="Personal Care" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Personal Care" ? "selected" : "");}?> title="Toiletries, haircuts, and grooming services.">Personal Care</option>
+                <option value="Clothing" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Clothing" ? "selected" : "");}?> title="New apparel and shoes.">Clothing</option>
+                <option value="Entertainment and Recreation" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Entertainment and Recreation" ? "selected" : "");}?> title="Streaming services, hobbies, movies, or dining out.">Entertainment and Recreation</option>
+                <option value="Family and Pet Care" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Family and Pet Care" ? "selected" : "");}?> title="Childcare, pet food, and veterinary costs.">Family and Pet Care</option>
+                <option value="Miscellaneous" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Miscellaneous" ? "selected" : "");}?> title="Gifts, travel, household supplies, and other irregular costs.">Miscellaneous</option>
+                <option value="Other" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Other" ? "selected" : "");}?> title="Other causes of expence">Other</option>
+              </select>
+              <label for="date" class="text-xs font-bold xl:text-lg">Date :</label>
+              <select class="bg-white rounded-sm cursor-pointer" name="date" id="dateFilter">
+                <option value="All"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "All" ? "selected" : "");}?> >All</option>
+                <option value="CURMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURMONTH" ? "selected" : "");}?>>This Month</option>
+                <option value="LASMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASMONTH" ? "selected" : "");}?>>Last Month</option>
+                <option value="CURYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURYEAR" ? "selected" : "");}?>>This Year</option>
+                <option value="LASYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASYEAR" ? "selected" : "");}?>>Last Year</option>
+              </select>
+              <button type="submit" class="py-1 px-2 text-xs xl:text-base bg-blue-500 text-white font-bold rounded-md cursor-pointer">Apply</button>
+            </form>
+              </div>
+          </div>
+          <div class="hidden 2xl:flex w-full  flex-row items-center justify-end gap-2">
+            <h1 class="text-xl font-bold">Filter : </h1>
+            <form class="flex items-center gap-2" action="filter.php?target=expences" method = "post">
+              <label for="category" class="text-lg font-bold">Category :</label>
+              <select class="bg-[#f2f4f7] rounded-md cursor-pointer" name="category" id="categoryFilter">
+                <option value="All" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "All" ? "selected" : "");}?>>All</option>
+                <option value="Housing" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Housing" ? "selected" : "");}?>
+                        title="Rent or mortgage payments, property taxes, and homeowner's or renter's insurance.">Housing</option>
+                <option value="Utilities" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Utilities" ? "selected" : "");}?> title="Electricity, water, gas, internet, and phone bills.">Utilities</option>
+                <option value="Food" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Food" ? "selected" : "");}?> title="Groceries and meals prepared at home.">Food</option>
+                <option value="Transportation" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Transportation" ? "selected" : "");}?>
+                        title="Car payments, fuel, public transit passes, maintenance, insurance, and parking fees.">
+                          Transportation</option>
+                <option value="Healthcare" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Healthcare" ? "selected" : "");}?>
+                        title="Insurance premiums, out-of-pocket medical costs, prescriptions, and dental care.">Healthcare</option>
+                <option value="Debt Payments" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Debt Payments" ? "selected" : "");}?> title="Student loans, credit card payments, and other loans.">Debt Payments</option>
+                <option value="Personal Care" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Personal Care" ? "selected" : "");}?> title="Toiletries, haircuts, and grooming services.">Personal Care</option>
+                <option value="Clothing" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Clothing" ? "selected" : "");}?> title="New apparel and shoes.">Clothing</option>
+                <option value="Entertainment and Recreation" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Entertainment and Recreation" ? "selected" : "");}?> title="Streaming services, hobbies, movies, or dining out.">Entertainment and Recreation</option>
+                <option value="Family and Pet Care" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Family and Pet Care" ? "selected" : "");}?> title="Childcare, pet food, and veterinary costs.">Family and Pet Care</option>
+                <option value="Miscellaneous" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Miscellaneous" ? "selected" : "");}?> title="Gifts, travel, household supplies, and other irregular costs.">Miscellaneous</option>
+                <option value="Other" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "Other" ? "selected" : "");}?> title="Other causes of expence">Other</option>
+              </select>
+              <label for="date" class="text-lg font-bold">Date :</label>
+              <select class="bg-[#f2f4f7] rounded-md cursor-pointer" name="date" id="dateFilter">
+                <option value="All" <?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "All" ? "selected" : "");}?>>All</option>
+                <option value="CURMONTH" <?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURMONTH" ? "selected" : "");}?>>This Month</option>
+                <option value="LASMONTH" <?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASMONTH" ? "selected" : "");}?>>Last Month</option>
+                <option value="CURYEAR" <?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURYEAR" ? "selected" : "");}?>>This Year</option>
+                <option value="LASYEAR" <?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASYEAR" ? "selected" : "");}?>>Last Year</option>
+              </select>
+              <button type="submit" class="py-1 px-2 bg-blue-500 text-white font-bold rounded-md cursor-pointer">Apply</button>
+            </form>
+          </div>
+        </div>
           <div class="w-[90%]  h-[90%] flex flex-col items-center py-2 shadow-lg">
            <div class="w-full grid grid-cols-10 grid-rows-1">
             <div class="col-span-2 border-b border-r text-[8px] 2xl:text-2xl text-center font-bold break-words xl:text-base py-2">Amount</div>
@@ -57,29 +135,49 @@
            </div>
            <div class="w-full h-full  overflow-scroll [scrollbar-width:none]">
                      <div class="w-full grid grid-cols-10 grid-rows-1 py-2 px-1 bg-[#f2f4f7]">
-                       <?php 
-                       require 'config.php';
-                       $id     = 0;
-              $result = $conn->query("SELECT * FROM expences");
-              if ($result->num_rows > 0) {
-                  while ($expence = $result->fetch_assoc()) {
-                      $id = $expence['id'];
+                       <?php $id     = 0;
+                       if(isset($_SESSION['filteredArray'])){
+                        foreach($_SESSION['filteredArray'] as $row){
+                          
+                      $id = $row['id'];
                   ?>
-            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $expence['montant'] ?>$</div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $expence['category'] ?></div>
-            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $expence['description'] ?></div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $expence['date'] ?></div>
+            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $row['montant'] ?>$</div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $row['category'] ?></div>
+            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $row['description'] ?></div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $row['date'] ?></div>
             <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
               <button id="btn" onclick="deleteModal(<?php echo $id ?>,'expences')"
             class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
             delete
         </button>
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $expence['montant'] ?>,'<?php echo $expence['description'] ?>','expences','')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+        <button onclick="editModal(<?php echo $id ?>,<?php echo $row['montant'] ?>,'<?php echo $row['description'] ?>','expences','<?php echo $row['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+            edit
+        </button>
+            </div>
+            <?php  
+          }
+            } else{        
+              $result = $conn->query("SELECT * FROM expences");
+              if ($result->num_rows > 0) {
+                  while ($income = $result->fetch_assoc()) {
+                      $id = $income['id'];
+                  ?>
+            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $income['montant'] ?>$</div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $income['category'] ?></div>
+            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $income['description'] ?></div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $income['date'] ?></div>
+            <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
+              <button id="btn" onclick="deleteModal(<?php echo $id ?>,'expences')"
+            class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
+            delete
+        </button>
+        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','expences','<?php echo $row['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
             edit
         </button>
             </div>
             <?php }
-                     }
+                }}
+                session_unset();
                  ?>
            </div>
           </div>
