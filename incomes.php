@@ -56,8 +56,33 @@
     </div>
     <div class ="w-full h-full bg-[#f2f4f7] flex justify-center items-center">
        <div class = "w-[90%] h-[90%] bg-white rounded-lg flex flex-col justify-center gap-2 items-center p-4">
-        <div class="w-full flex flex-row items-center justify-between xl:px-10 2xl:px-16">
+        <div class="w-full h-full flex flex-row items-center justify-between xl:px-10">
           <h1 class="text-3xl  xl:text-4xl text-[#021c3b] font-bold self-start">Incomes</h1>
+          <div class="relative 2xl:hidden">
+            <i id="sortBtn" class="fi fi-br-bars-sort"></i>
+            <div id="sort" class="w-30 h-30 bg-gray-200 rounded-md shadow-lg absolute right-0 hidden">
+                <form class="h-full flex flex-col justify-around items-center" action="sort.php?target=incomes" method="post">
+                  <label for="sort" class="text-base font-bold self-start pl-5">Sort By:</label>
+                  <select name="sort" class="bg-white rounded-sm cursor-pointer text-[12px] w-20">
+                    <option value="Amount">Amount</option>
+                    <option value="Date">Date</option>
+                  </select>
+                  <button type="submit" class="py-1 px-2 w-10 bg-black text-white font-bold text-xs rounded-md cursor-pointer">Sort</button>
+                </form>
+            </div>
+          </div>
+          <div class="w-[60%] hidden 2xl:flex items-center px-10">
+            <form class="w-full flex flex-row gap-2 items-center" action="sort.php?target=incomes" method="post">
+                  <label for="sort" class="text-xl font-bold self-start">Sort By:</label>
+                  <select name="sort" class="bg-[#f2f4f7] rounded-sm cursor-pointer text-sm w-30">
+                    <option value="Amount">Amount</option>
+                    <option value="Date">Date</option>
+                  </select>
+                  <button type="submit" class="py-1 px-2 bg-black text-white font-bold text-base rounded-md cursor-pointer">Sort</button>
+                </form>
+
+            </form>
+          </div>
           <div class="relative 2xl:hidden">
               <i id="filterBtn" class="fi fi-rr-filter"></i>
               <div id="filter" class="w-30 h-40 xl:w-50 xl:h-60 bg-gray-200 absolute right-0 rounded-md shadow-lg hidden">
@@ -178,7 +203,9 @@
                 } else {
                     $result = $conn->query("SELECT * FROM incomes join users on incomes.userID = users.id");
                     if ($result->num_rows > 0) {
+                      unset($_SESSION['backup']);
                         while ($income = $result->fetch_assoc()) {
+                          $_SESSION['backup'][]=$income;
                             $id = $income['id'];
                         ?>
             <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $income['montant'] ?>$</div>
@@ -198,6 +225,10 @@
                         
                     }
                 }
+                if(isset($_SESSION['filteredArray'])){
+                  $_SESSION['backup'] = $_SESSION['filteredArray'];
+                }
+                
                 unset($_SESSION['filteredArray']);;
             ?>
            </div>

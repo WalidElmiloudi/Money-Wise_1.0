@@ -16,7 +16,9 @@ const expenceModal = document.getElementById("expenceAddModal");
 const closeExpenceModal = document.getElementById("closeExpenceModal");
 const main = document.querySelector("body>main");
 const filterBtn = document.getElementById("filterBtn");
+const sortBtn = document.getElementById("sortBtn");
 const filter = document.getElementById("filter");
+const sort = document.getElementById("sort");
 
 if (openLoginModal) {
   openLoginModal.addEventListener("click", () => {
@@ -154,4 +156,8 @@ function editModal(id,amount,description,table,category){
 
 filterBtn.addEventListener("click",()=>{
   filter.classList.toggle("hidden");
+})
+
+sortBtn.addEventListener("click",()=>{
+  sort.classList.toggle("hidden");
 })
