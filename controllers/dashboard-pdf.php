@@ -1,10 +1,10 @@
 <?php
 session_start();
 if(!isset($_SESSION['userId'])){
-  header("Location: index.php");
+  header("Location: ../views/index.php");
   exit;
 }
-require "vendor/autoload.php";
+require "../vendor/autoload.php";
 use Dompdf\Dompdf;
 
 
@@ -42,11 +42,6 @@ ob_start();
   </style>
 </head>
 <body>
-  <!-- total Incomes
-  total expences
-  balance
-  This month incomes 
-  this month expences -->
   <div class="card">
   <h1>Total Incomes :</h1>
   <?php
@@ -83,5 +78,5 @@ $dompdf->setPaper("A4", "portrait");
 $dompdf->render();
 $dompdf->stream("dashboard.pdf", ["Attachment" => true]);
 
-header("Location: dashboard.pdf");
+header("Location: ../views/dashboard.pdf");
 exit;

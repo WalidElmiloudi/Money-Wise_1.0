@@ -1,6 +1,6 @@
 <?php
 
-    require 'config.php';
+    require '../configs/config.php';
     session_start();
     if(!isset($_SESSION['userId'])){
   header("Location: index.php");
@@ -52,7 +52,6 @@
         <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="dashboard.php">Dashboard</a></h1>
         <h1 class=" text-4xl font-bold  py-2 px-4 w-fit  hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="incomes.php">Incomes</a></h1>
         <h1 class=" text-4xl font-bold text-white bg-gray-800 rounded-full py-2 px-4 w-fit"><a href="#">Expences</a></h1>
-      <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="account.php">Account</a></h1>
     </div>
     <div class ="w-full h-full bg-[#f2f4f7] flex justify-center items-center">
        <div class = "w-[90%] h-[90%] bg-white rounded-lg flex flex-col justify-center gap-2 items-center p-4">
@@ -61,7 +60,7 @@
            <div class="relative 2xl:hidden">
             <i id="sortBtn" class="fi fi-br-bars-sort"></i>
             <div id="sort" class="w-30 h-30 bg-gray-200 rounded-md shadow-lg absolute right-0 hidden">
-                <form class="h-full flex flex-col justify-around items-center" action="sort.php?target=expences" method="post">
+                <form class="h-full flex flex-col justify-around items-center" action="../controllers/sort.php?target=expences" method="post">
                   <label for="sort" class="text-base font-bold self-start pl-5">Sort By:</label>
                   <select name="sort" class="bg-white rounded-sm cursor-pointer text-[12px] w-20">
                     <option value="Amount">Amount</option>
@@ -72,7 +71,7 @@
             </div>
           </div>
           <div class="w-[50%] hidden 2xl:flex items-center px-10">
-            <form class="w-full flex flex-row gap-2 items-center" action="sort.php?target=expences" method="post">
+            <form class="w-full flex flex-row gap-2 items-center" action="../controllers/sort.php?target=expences" method="post">
                   <label for="sort" class="text-xl font-bold self-start">Sort By:</label>
                   <select name="sort" class="bg-[#f2f4f7] rounded-sm cursor-pointer text-sm w-30">
                     <option value="Amount">Amount</option>
@@ -86,7 +85,7 @@
           <div class="relative xl:hidden">
               <i id="filterBtn" class="fi fi-rr-filter"></i>
               <div id="filter" class="w-30 h-40 xl:w-50 xl:h-60 bg-gray-200 absolute right-0 rounded-md shadow-lg hidden">
-   <form class="h-full flex flex-col gap-2 p-2 xl:justify-around" action="filter.php?target=expences" method = "post">
+   <form class="h-full flex flex-col gap-2 p-2 xl:justify-around" action="../controllers/filter.php?target=expences" method = "post">
               <label for="category" class="text-xs font-bold xl:text-lg">Category :</label>
               <select class="bg-white rounded-sm cursor-pointer text-[12px]" name="category" id="categoryFilter">
                 <option value="All" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "All" ? "selected" : "");}?>>All</option>
@@ -121,7 +120,7 @@
           </div>
           <div class="hidden 2xl:flex w-full  flex-row items-center justify-end gap-2">
             <h1 class="text-xl font-bold">Filter : </h1>
-            <form class="flex items-center gap-2" action="filter.php?target=expences" method = "post">
+            <form class="flex items-center gap-2" action="../controllers/filter.php?target=expences" method = "post">
               <label for="category" class="text-lg font-bold">Category :</label>
               <select class="bg-[#f2f4f7] rounded-md cursor-pointer" name="category" id="categoryFilter">
                 <option value="All" <?php if (isset($_SESSION['category'])) {echo($_SESSION['category'] === "All" ? "selected" : "");}?>>All</option>
@@ -226,7 +225,7 @@
       aria-hidden="true">
       <div
         class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
-        <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="expenceHandler.php" method="post">
+        <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="../controllers/expenceHandler.php" method="post">
           <label for="amount" class="text-xl font-bold text-[#021c3b] self-start pl-8 xl:pl-16 2xl:pl-20">Amount
             :</label>
           <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
@@ -269,6 +268,6 @@
       </div>
     </section>
   </main>
-  <script src="script.js"></script>
+  <script src="../assets/script.js"></script>
 </body>
 </html>

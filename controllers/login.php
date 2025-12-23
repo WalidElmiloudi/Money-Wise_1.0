@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../configs/config.php';
 session_start();
 
 $email = $_POST['email'];
@@ -11,11 +11,11 @@ if($result->num_rows>0){
   if(password_verify($password,$user['password'])){
     $_SESSION['userId'] = $user['id'];
     $_SESSION['username'] =$user['name'];
-    header("Location: home.php");
+    header("Location: ../views/home.php");
     exit;
   }
 }
 
-header("Location: index.php");
+header("Location: ../views/index.php");
 exit;
 ?>

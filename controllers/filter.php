@@ -1,6 +1,6 @@
 <?php
 
-require 'config.php';
+require '../configs/config.php';
 session_start();
 $category = $_POST['category'];
 $date     = $_POST['date'];
@@ -67,6 +67,6 @@ if ($category != "All") {
         }
     }
 }
-header("Location: $table.php");
+header("Location: ../views/$table.php");
 exit;
 ?>

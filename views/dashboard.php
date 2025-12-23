@@ -1,6 +1,6 @@
 <?php
 
-    require 'config.php';
+    require '../configs/config.php';
     session_start();
     if(!isset($_SESSION['userId'])){
   header("Location: index.php");
@@ -48,7 +48,7 @@
   </section>
   <main class="w-full h-full flex flex-col gap-2 relative">
     <div class="border-2 2xl:border-4 bg-white w-10 h-10 2xl:w-15 2xl:h-15 flex justify-center items-center rounded-full absolute right-2 top-0 xl:right-4 xl:top-2" title="Download as pdf">
-      <a href="dashboard-pdf.php"><i class="fi fi-br-download text-xl 2xl:text-3xl"></i></a>
+      <a href="../controllers/dashboard-pdf.php"><i class="fi fi-br-download text-xl 2xl:text-3xl"></i></a>
     </div>
     <h1 class="text-4xl font-bold text-[#021c3b] pl-2 xl:hidden">Dashboard</h1>
     <div class="w-full h-full grid grid-cols-2 xl:grid-cols-14 grid-rows-8 gap-2 px-2">
@@ -58,7 +58,6 @@
           <h1 class=" text-4xl font-bold text-white py-2 px-4 w-fit bg-gray-800 rounded-full"><a href="#">Dashboard</a></h1>
           <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="incomes.php">Incomes</a></h1>
           <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="expences.php">Expences</a></h1>
-          <h1 class="text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="account.php">Account</a></h1>
         </div>
       </div>
       <div class="xl:order-2 col-span-1 xl:col-span-4 xl:row-span-2 row-span-2 bg-white shadow-md rounded-md flex justify-center items-center">
@@ -74,7 +73,7 @@
 
               if ($result) {
                   $amount       = $result->fetch_assoc();
-                  $_SESSION['totalIncomes'] = $amount['total'];
+                  $_SESSION['totalIncomes'] = $amount['total']>0 ? $amount['total']:0;
               ?>
                   <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
                   <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Incomes:  </h1>
@@ -98,7 +97,7 @@
                   }
                   if ($result) {
                       $amount        = $result->fetch_assoc();
-                      $_SESSION['totalExpences'] = $amount['total'];
+                      $_SESSION['totalExpences'] = $amount['total'] ? $amount['total']:0;
                   ?>
                   <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
                   <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Expences:  </h1>
@@ -197,5 +196,5 @@ new Chart(ctx, {
 </script>
 
 
-  <script src="script.js"></script>
+  <script src="../assets/script.js"></script>
 </body>

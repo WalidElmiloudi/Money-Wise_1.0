@@ -18,7 +18,7 @@ switch($sortBy){
   break;
 }
 
-header("Location: $table.php");
+header("Location: ../views/$table.php");
 exit;
 
 ?>

@@ -14,12 +14,12 @@
 
 <body class="w-full h-screen bg-slate-100 font-['open_sans'] overflow-hidden">
   <header class="fixed w-full flex items-center justify-between px-2 py-2 xl:-mt-10 xl:px-4">
-    <img class="w-20 h-20 xl:w-40 xl:h-40" src="img/Gemini_Generated_Image_9xkb4f9xkb4f9xkb.webp" alt="MONEYWISE logo">
+    <img class="w-20 h-20 xl:w-40 xl:h-40" src="../assets/img/Gemini_Generated_Image_9xkb4f9xkb4f9xkb.webp" alt="MONEYWISE logo">
     <button id="openLoginModal"
       class="text-white text-lg bg-green-500 font-bold px-2 py-1 rounded-md cursor-pointer xl:text-2xl">Login</button>
   </header>
   <section class="w-full h-screen flex flex-col justify-center items-center xl:flex-row xl:px-15 px-2 gap-6  ">
-    <img class="xl:order-2 xl:w-200 xl:h-200 xl:-ml-60 xl:-mr-20 -mb-20 -mt-20 2xl:w-250 2xl:h-250 2xl:-mr-50" src="img/Gemini_Generated_Image_9xkb4f9xkb4f9xkb.webp" alt="MONEYWISE logo">
+    <img class="xl:order-2 xl:w-200 xl:h-200 xl:-ml-60 xl:-mr-20 -mb-20 -mt-20 2xl:w-250 2xl:h-250 2xl:-mr-50" src="../assets/img/Gemini_Generated_Image_9xkb4f9xkb4f9xkb.webp" alt="MONEYWISE logo">
     <div class="xl:order-1 flex flex-col items-center xl:items-start gap-5 xl:gap-8">
       <p class="text-center text-3xl font-bold text-[#021c3b] xl:text-start xl:text-6xl 2xl:text-7xl">Visualize your money flow and stick to your budget with
         simple, powerful tracking.</p>
@@ -32,7 +32,7 @@
     aria-hidden="true">
     <div class="w-80 h-100 xl:w-120 xl:h-140 bg-slate-100 rounded-md flex justify-center items-center flex-col gap-4 xl:gap-8">
       <h1 class="text-green-600 font-bold text-2xl xl:text-4xl">LOGIN</h1>
-      <form action="login.php" method="post" class="flex flex-col justify-center items-center gap-2 xl:gap-4">
+      <form action="../controllers/login.php" method="post" class="flex flex-col justify-center items-center gap-2 xl:gap-4">
         <input class="text-xl py-1 pl-1 pr-5 bg-white rounded-md text-[#021c3b] xl:text-3xl xl:py-3 xl:pl-3 xl:pr-15" type="email" name="email"
           placeholder="Email" required>
         <input class="text-xl py-1 pl-1 pr-5 bg-white rounded-md text-[#021c3b] xl:text-3xl xl:py-3 xl:pl-3 xl:pr-15" type="password" name="password"
@@ -54,7 +54,7 @@
     aria-hidden="true">
     <div class="w-80 h-100 xl:w-120 xl:h-140 bg-slate-100 rounded-md flex justify-center items-center flex-col gap-4 xl:gap-8">
       <h1 class="text-blue-600 font-bold text-2xl xl:text-4xl">SIGN UP</h1>
-      <form action="register.php" method="post" class="flex flex-col justify-center items-center gap-2 xl:gap-4">
+      <form action="../controllers/register.php" method="post" class="flex flex-col justify-center items-center gap-2 xl:gap-4">
         <div class="flex justify-center items-center gap-2.5">
           <input class="text-lg py-1 pl-1 w-30 bg-white rounded-md text-[#021c3b] xl:text-xl xl:py-3 xl:pl-3 xl:w-50" type="text" name="firstname"
             placeholder="First Name" required title="Please no digits or special caracteres">
@@ -77,7 +77,7 @@
         class="py-1 px-2 bg-green-500 text-white text-xl font-bold rounded-md cursor-pointer xl:text-3xl">LOGIN</button>
     </div>
   </section>
-  <script src="script.js"></script>
+  <script src="../assets/script.js"></script>
 </body>
 
 </html>

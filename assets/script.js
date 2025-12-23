@@ -93,8 +93,8 @@ function deleteModal(id,table){
     newSection.innerHTML = `<div class="w-70 h-50 bg-slate-100 rounded-md flex flex-col items-center justify-center gap-4">
         <p class="text-3xl font-bold text-[#021c3b]">Are you sure ?</p>
         <div class=" w-50 flex justify-between items-center">
-          <a href="${table}.php"><button class="py-1 px-2 rounded-md bg-green-400 text-white text-2xl font-bold cursor-pointer">Cancel</button></a>
-          <a href="delete.php?id=${id} &target=${table}"><button class="py-1 px-2 rounded-md bg-red-500 text-white text-2xl font-bold cursor-pointer">Delete</button></a>
+          <a href="../views/${table}.php"><button class="py-1 px-2 rounded-md bg-green-400 text-white text-2xl font-bold cursor-pointer">Cancel</button></a>
+          <a href="../controllers/delete.php?id=${id} &target=${table}"><button class="py-1 px-2 rounded-md bg-red-500 text-white text-2xl font-bold cursor-pointer">Delete</button></a>
         </div>
       </div>`;
   main.appendChild(newSection);
@@ -107,7 +107,7 @@ function editModal(id,amount,description,table,category){
       
     } else{
       newSection.innerHTML = `<div class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
-      <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="edit.php?id=${id}&target=${table}" method="post">
+      <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="../controllers/edit.php?id=${id}&target=${table}" method="post">
         <label for="amount" class="text-xl font-bold text-[#021c3b] self-start pl-8 xl:pl-16 2xl:pl-20">Amount :</label>
         <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
           title="ex : x.xx" value="${amount}">

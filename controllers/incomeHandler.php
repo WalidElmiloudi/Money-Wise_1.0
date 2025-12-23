@@ -1,8 +1,7 @@
 <?php
 
 session_start();
-
-require 'config.php';
+require '../configs/config.php';
 
 $amount = $_POST['amount'];
 $type = $_POST['category'];
@@ -11,6 +10,6 @@ $userID = $_SESSION['userId'];
 
 $conn->query("INSERT INTO incomes (montant,description,category,userID) VALUES ('$amount','$description','$type','$userID')");
 
-header("Location: incomes.php");
+header("Location: ../views/incomes.php");
 exit;
 ?>

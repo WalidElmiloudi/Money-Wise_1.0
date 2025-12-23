@@ -1,11 +1,6 @@
 <?php
 
-$host     = "localhost";
-$user     = "root";
-$password = "";
-$db       = "smart_wallet";
-
-$conn = new mysqli($host, $user, $password, $db);
+require '../configs/config.php';
 
 $amount = $_POST['amount'];
 $type = $_POST['category'];
@@ -16,6 +11,6 @@ $target = $_GET['target'];
 
 $conn->query("UPDATE $target SET montant=$amount, category='$type', description='$description' WHERE id = '$id' ");
 
-header("Location: $target.php");
+header("Location: ../views/$target.php");
 exit;
 ?>

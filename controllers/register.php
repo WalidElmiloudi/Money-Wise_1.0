@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../configs/config.php';
 
 $name = $_POST['firstname']." ".$_POST['lastname'];
 $email = $_POST['email'];
