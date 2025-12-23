@@ -32,7 +32,8 @@ class Auth{
     }
 
     public function register($first_name,$last_name){
-
+      $this->first_name = $first_name;
+      $this->last_name = $last_name;
       $hashed_password = password_hash($this->password,PASSWORD_DEFAULT);
       $conn = new Database('localhost','money_wallet','root','');
       $pdo = $conn->connect();
@@ -40,15 +41,17 @@ class Auth{
       $stmt->execute([':email' => $this->email]);
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
       if(empty($user)){
-        $stmt = $pdo->prepare("INSERT INTO users () WHERE email = :email");
-      $stmt->execute([':email' => $this->email]);
+        $stmt = $pdo->prepare("INSERT INTO users (name,email,password) VALUES (:name,:email,:password)");
+        $stmt->execute([
+        ':name'=>$this->first_name." ".$this->last_name,
+        ':email' => $this->email,
+        ':password' =>$hashed_password
+        ]);
+        return true;
       } else{
         return false;
       }
     }
 
 }
-$user = new Auth('elwalid38@gmail.com','test1234');
-$isUserSignedIn = $user->login();
-
 ?>
