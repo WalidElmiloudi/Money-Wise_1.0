@@ -64,13 +64,18 @@
           <?php
               
               $userID = $_SESSION['userId'] ;
+              $month = date('n');
+
+              $conn = new Database('localhost','money_wallet','root','');
+              $pdo = $conn->connect();
+
               $statistic = new Statistic($userID);
 
-              $total_incomes = $statistic->getTotal('incomes');
-              $total_expences = $statistic->getTotal('expences');
-              $balance = $statistic->getBalance();
-              $month_incomes = $statistic->getMonthlyTotal('incomes');
-              $month_expences = $statistic->getMonthlyTotal('expences');
+              $total_incomes = $statistic->getTotal($pdo,'incomes');
+              $total_expences = $statistic->getTotal($pdo,'expences');
+              $balance = $statistic->getBalance($pdo);
+              $month_incomes = $statistic->getMonthlyTotal($pdo,'incomes',$month);
+              $month_expences = $statistic->getMonthlyTotal($pdo,'expences',$month);
 
               $_SESSION['monthTotalIncomes'] = $month_incomes > 0 ? $month_incomes:0;
               $_SESSION['totalIncomes'] = $total_incomes>0 ? $total_incomes:0;
@@ -82,6 +87,35 @@
                   </div >
                <?php
                ?>
+      </div>
+      <div class="xl:order-5 col-span-2 row-span-2 xl:col-span-8 xl:row-span-2 bg-white shadow-md rounded-md grid grid-cols-4 p-2 gap-2">
+          <div class="col-span-2 flex flex-col">
+              <form class="h-full flex flex-col justify-center gap-1" action="dashboard.php" method="post">
+                <label class="text-2xl font-bold " for="type">Choose The Type :</label>
+                <select class="text-2xl bg-[#f5f5f5] h-15 rounded-md" name="type" id="typeSelect">
+                  <option value="none">Choose</option>
+                  <option value="Incomes">Incomes</option>
+                  <option value="Expences">Expences</option>
+                </select>
+                <div id="selectContainer" class="flex flex-row gap-1 items-center justify-between">
+                  
+                </div>
+                <button class="bg-blue-500 text-white font-bold text-3xl py-2 px-4 rounded-md">APPLY</button>
+              </form>
+              <?php
+              if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $table_name = htmlspecialchars(trim($_POST['type']));
+              $category = htmlspecialchars(trim($_POST['category']));
+
+              if($table_name !== 'none'){
+                $category_total = $statistic->getTotalByCategory($pdo,$table_name,$category);
+              }
+              }
+              ?>
+          </div>
+          <div class = "col-span-2 bg-[#f5f5f5] rounded-md flex justify-center items-center">
+              <h1 class="text-4xl font-bold"><?php if(isset($category_total)){ echo $category_total;} else{echo '0';}?>$</h1>
+          </div>
       </div>
       <div class="xl:order-3 col-span-1 row-span-2 xl:col-span-4 xl:row-span-2 bg-white shadow-md rounded-md">
 
@@ -101,8 +135,8 @@
                ?>
 
       </div>
-      <div class="xl:order-5 col-span-2 xl:row-span-6 xl:col-span-8 row-span-2 bg-white shadow-md rounded-md">
-        <div class="w-full h-full px-4 flex justify-center items-center">
+      <div class="xl:order-6 col-span-2 xl:row-span-4 xl:col-span-8 row-span-2 bg-white shadow-md rounded-md">
+        <div class="w-full h-[90%] px-4 flex justify-center items-center">
     <canvas class="bg-white rounded-md w-full h-full" id="myChart"></canvas>
 </div>
 
@@ -128,14 +162,10 @@ $monthlyIncomes = [];
 $monthlyExpences = [];
 
 for ($m = 1; $m <= 12; $m++) {
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
-    $resIncome = $pdo->query("SELECT SUM(montant) AS total FROM incomes join users on incomes.userID = users.id WHERE MONTH(date)=$m AND YEAR(date)=YEAR(CURDATE())");
-    $income = $resIncome->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    $income = $statistic->getMonthlyTotal($pdo,'incomes',$m) ?? 0;
     $monthlyIncomes[] = $income;
 
-    $resExpence = $pdo->query("SELECT SUM(montant) AS total FROM expences join users on expences.userID = users.id WHERE MONTH(date)=$m AND YEAR(date)=YEAR(CURDATE())");
-    $expense = $resExpence->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    $expense = $statistic->getMonthlyTotal($pdo,'expences',$m) ?? 0;
     $monthlyExpences[] = $expense;
 }
 ?>

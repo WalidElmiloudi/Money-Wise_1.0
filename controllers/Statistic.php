@@ -9,9 +9,7 @@ class Statistic{
     $this->user_id = $user_id;
   }
 
-  public function getTotal($table_name){
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
+  public function getTotal($pdo,$table_name){
     $stmt = $pdo->prepare("SELECT SUM(montant) as total FROM $table_name WHERE userID = :user_id");
     $stmt->execute([
       ':user_id'=>$this->user_id
@@ -20,9 +18,7 @@ class Statistic{
     return $result['total'];
   }
 
-  public function getBalance(){
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
+  public function getBalance($pdo){
     $stmt = $pdo->prepare("SELECT SUM(montant) as total FROM incomes WHERE userID = :user_id");
     $stmt->execute([
       ':user_id'=>$this->user_id
@@ -38,10 +34,8 @@ class Statistic{
     return $balance;
   }
 
-  public function getMonthlyTotal($table_name){
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
-    $stmt = $pdo->prepare("SELECT SUM(montant) as total FROM $table_name WHERE userID = :user_id AND MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE())");
+  public function getMonthlyTotal($pdo,$table_name,$month){
+    $stmt = $pdo->prepare("SELECT SUM(montant) as total FROM $table_name WHERE userID = :user_id AND MONTH(date) = {$month} AND YEAR(date) = YEAR(CURDATE())");
     $stmt->execute([
       ':user_id'=>$this->user_id
     ]);
@@ -49,9 +43,7 @@ class Statistic{
     return $result['total'];
   }
 
-  public function getTotalByCategory($table_name,$category){
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
+  public function getTotalByCategory($pdo,$table_name,$category){
     $stmt = $pdo->prepare("SELECT SUM(montant) as total FROM $table_name WHERE userID = :user_id AND category = :category");
     $stmt->execute([
       ':user_id'=>$this->user_id,
