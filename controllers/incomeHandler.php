@@ -1,14 +1,16 @@
 <?php
 
 session_start();
-require '../configs/config.php';
+require 'Income.php';
 
-$amount = $_POST['amount'];
-$type = $_POST['category'];
-$description = $_POST['description'];
+$amount = htmlspecialchars(trim($_POST['amount']));
+$type = htmlspecialchars(trim($_POST['category']));
+$description = htmlspecialchars(trim($_POST['description']));
 $userID = $_SESSION['userId'];
 
-$conn->query("INSERT INTO incomes (montant,description,category,userID) VALUES ('$amount','$description','$type','$userID')");
+$income = new Income($userID);
+
+$income->add($amount,$type,$description);
 
 header("Location: ../views/incomes.php");
 exit;
