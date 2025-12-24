@@ -3,8 +3,7 @@ require 'Database.php';
 
 class Auth{
 
-    private $first_name;
-    private $last_name;
+    private $name;
     private $email;
     private $password;
 
@@ -31,9 +30,8 @@ class Auth{
       }
     }
 
-    public function register($first_name,$last_name){
-      $this->first_name = $first_name;
-      $this->last_name = $last_name;
+    public function register($name){
+      $this->name = $name;
       $hashed_password = password_hash($this->password,PASSWORD_DEFAULT);
       $conn = new Database('localhost','money_wallet','root','');
       $pdo = $conn->connect();
@@ -43,7 +41,7 @@ class Auth{
       if(empty($user)){
         $stmt = $pdo->prepare("INSERT INTO users (name,email,password) VALUES (:name,:email,:password)");
         $stmt->execute([
-        ':name'=>$this->first_name." ".$this->last_name,
+        ':name'=>$this->name,
         ':email' => $this->email,
         ':password' =>$hashed_password
         ]);

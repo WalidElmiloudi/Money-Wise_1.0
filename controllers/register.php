@@ -1,14 +1,19 @@
 <?php
-require '../configs/config.php';
 
-$name = $_POST['firstname']." ".$_POST['lastname'];
-$email = $_POST['email'];
-$password = $_POST['password'];
+require 'Auth.php';
+
+$name = htmlspecialchars(trim($_POST['firstname']))." ".htmlspecialchars(trim($_POST['lastname']));
+$email = htmlspecialchars(trim($_POST['email']));
+$password = htmlspecialchars(trim($_POST['password']));
 $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
 
-$conn->query("INSERT INTO users (name,email,password) VALUES ('$name','$email','$hashedPassword')");
-
-header("Location: index.php");
+$user = new Auth($email,$password);
+$signed_in = $user->register($name);
+if($signed_in){
+  header("Location:../views/index.php");
 exit;
+} else{
+  die("Registiration Failed");
+}
 
 ?>
