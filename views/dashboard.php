@@ -1,9 +1,9 @@
 <?php
 
-    require '../configs/config.php';
+    require '../controllers/Statistic.php';
     session_start();
     if(!isset($_SESSION['userId'])){
-  header("Location: index.php");
+  header("Location:index.php");
   exit;
 }
 ?>
@@ -62,49 +62,41 @@
       </div>
       <div class="xl:order-2 col-span-1 xl:col-span-4 xl:row-span-2 row-span-2 bg-white shadow-md rounded-md flex justify-center items-center">
           <?php
-              $totalIncomes      = 0;
-              $_SESSION['monthTotalIncomes'] = 0;
-              $monthResult       = $conn->query("SELECT SUM(montant) AS total FROM incomes join users on incomes.userID = users.id WHERE MONTH(date) = MONTH(CURDATE()) and YEAR(date) = YEAR(CURDATE())");
-              if ($monthResult) {
-                  $amount            = $monthResult->fetch_assoc();
-                  $_SESSION['monthTotalIncomes'] = $amount['total']>0 ? $amount['total']:0;
-              }
-              $result = $conn->query("SELECT SUM(montant) AS total FROM incomes join users on incomes.userID = users.id");
+              
+              $userID = $_SESSION['userId'] ;
+              $statistic = new Statistic($userID);
 
-              if ($result) {
-                  $amount       = $result->fetch_assoc();
-                  $_SESSION['totalIncomes'] = $amount['total']>0 ? $amount['total']:0;
+              $total_incomes = $statistic->getTotal('incomes');
+              $total_expences = $statistic->getTotal('expences');
+              $balance = $statistic->getBalance();
+              $month_incomes = $statistic->getMonthlyTotal('incomes');
+              $month_expences = $statistic->getMonthlyTotal('expences');
+
+              $_SESSION['monthTotalIncomes'] = $month_incomes > 0 ? $month_incomes:0;
+              $_SESSION['totalIncomes'] = $total_incomes>0 ? $total_incomes:0;
+
               ?>
                   <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
                   <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Incomes:  </h1>
-                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl font-bold text-green-600" ><?php echo ($amount['total']>0 ? $amount['total'] : 0) ?> $ </h1>
+                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl font-bold text-green-600" ><?php echo ($total_incomes>0 ? $total_incomes : 0) ?> $ </h1>
                   </div >
                <?php
-                   }
-
                ?>
       </div>
       <div class="xl:order-3 col-span-1 row-span-2 xl:col-span-4 xl:row-span-2 bg-white shadow-md rounded-md">
 
               <?php
-                  $result             = $conn->query("SELECT SUM(montant) AS total FROM expences join users on expences.userID = users.id");
-                  $totalExpences      = 0;
-                  $_SESSION['monthTotalExpences'] = 0;
-                  $monthResult        = $conn->query("SELECT SUM(montant) AS total FROM expences join users on expences.userID = users.id WHERE MONTH(date) = MONTH(CURDATE()) and YEAR(date) = YEAR(CURDATE())");
-                  if ($monthResult) {
-                      $amount             = $monthResult->fetch_assoc();
-                      $_SESSION['monthTotalExpences'] = $amount['total']>0 ? $amount['total']:0;
-                  }
-                  if ($result) {
-                      $amount        = $result->fetch_assoc();
-                      $_SESSION['totalExpences'] = $amount['total'] ? $amount['total']:0;
+
+                  $_SESSION['monthTotalExpences'] = $month_expences>0 ? $month_expences:0;
+                  $_SESSION['totalExpences'] = $total_expences ? $total_expences:0;
+
                   ?>
                   <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
                   <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Expences:  </h1>
-                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl  font-bold text-red-600 pl-5" ><?php echo ($amount['total']>0 ? $amount['total'] : 0) ?> $ </h1>
+                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl  font-bold text-red-600 pl-5" ><?php echo ($total_expences>0 ? $total_expences : 0) ?> $ </h1>
                   </div >
                <?php
-                   }
+                   
                    $_SESSION['balance'] = $_SESSION['totalIncomes'] - $_SESSION['totalExpences'];
                ?>
 
@@ -136,12 +128,14 @@ $monthlyIncomes = [];
 $monthlyExpences = [];
 
 for ($m = 1; $m <= 12; $m++) {
-    $resIncome = $conn->query("SELECT SUM(montant) AS total FROM incomes join users on incomes.userID = users.id WHERE MONTH(date)=$m AND YEAR(date)=YEAR(CURDATE())");
-    $income = $resIncome->fetch_assoc()['total'] ?? 0;
+    $conn = new Database('localhost','money_wallet','root','');
+    $pdo = $conn->connect();
+    $resIncome = $pdo->query("SELECT SUM(montant) AS total FROM incomes join users on incomes.userID = users.id WHERE MONTH(date)=$m AND YEAR(date)=YEAR(CURDATE())");
+    $income = $resIncome->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
     $monthlyIncomes[] = $income;
 
-    $resExpence = $conn->query("SELECT SUM(montant) AS total FROM expences join users on expences.userID = users.id WHERE MONTH(date)=$m AND YEAR(date)=YEAR(CURDATE())");
-    $expense = $resExpence->fetch_assoc()['total'] ?? 0;
+    $resExpence = $pdo->query("SELECT SUM(montant) AS total FROM expences join users on expences.userID = users.id WHERE MONTH(date)=$m AND YEAR(date)=YEAR(CURDATE())");
+    $expense = $resExpence->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
     $monthlyExpences[] = $expense;
 }
 ?>

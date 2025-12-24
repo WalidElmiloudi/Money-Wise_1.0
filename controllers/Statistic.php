@@ -41,7 +41,7 @@ class Statistic{
   public function getMonthlyTotal($table_name){
     $conn = new Database('localhost','money_wallet','root','');
     $pdo = $conn->connect();
-    $stmt = $pdo->prepare("SELECT SUM(montant) as total FROM $table_name WHERE userID = :user_id AND MONTH(date) = MONTH(CURDATE())");
+    $stmt = $pdo->prepare("SELECT SUM(montant) as total FROM $table_name WHERE userID = :user_id AND MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE())");
     $stmt->execute([
       ':user_id'=>$this->user_id
     ]);
