@@ -185,23 +185,23 @@
             <?php  
           }
             } else{        
-              $result = $conn->query("SELECT * FROM expences join users on expences.userID = users.id");
+              $result = $conn->query("SELECT * FROM expences WHERE expences.userID = {$_SESSION['userId']}");
               if ($result->num_rows > 0) {
                 unset($_SESSION['backup']);
-                  while ($income = $result->fetch_assoc()) {
-                    $_SESSION['backup'][] = $income;
-                      $id = $income['id'];
+                  while ($expence = $result->fetch_assoc()) {
+                    $_SESSION['backup'][] = $expence;
+                      $id = $expence['id'];
                   ?>
-            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $income['montant'] ?>$</div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $income['category'] ?></div>
-            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $income['description'] ?></div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $income['date'] ?></div>
+            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $expence['montant'] ?>$</div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $expence['category'] ?></div>
+            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $expence['description'] ?></div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $expence['date'] ?></div>
             <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
               <button id="btn" onclick="deleteModal(<?php echo $id ?>,'expences')"
             class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
             delete
         </button>
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','expences','<?php echo $row['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+        <button onclick="editModal(<?php echo $id ?>,<?php echo $expence['montant'] ?>,'<?php echo $expence['description'] ?>','expences','<?php echo $expence['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
             edit
         </button>
             </div>

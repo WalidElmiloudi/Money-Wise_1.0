@@ -200,7 +200,7 @@
             <?php
                     }
                 } else {
-                    $result = $conn->query("SELECT * FROM incomes join users on incomes.userID = users.id");
+                    $result = $conn->query("SELECT * FROM incomes WHERE incomes.userID = {$_SESSION['userId']}");
                     if ($result->num_rows > 0) {
                       unset($_SESSION['backup']);
                         while ($income = $result->fetch_assoc()) {
@@ -216,7 +216,7 @@
             class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
             delete
         </button>
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','incomes','<?php echo $row['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','incomes','<?php echo $income['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
             edit
         </button>
             </div>
