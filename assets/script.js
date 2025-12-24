@@ -94,7 +94,7 @@ function deleteModal(id,table){
         <p class="text-3xl font-bold text-[#021c3b]">Are you sure ?</p>
         <div class=" w-50 flex justify-between items-center">
           <a href="../views/${table}.php"><button class="py-1 px-2 rounded-md bg-green-400 text-white text-2xl font-bold cursor-pointer">Cancel</button></a>
-          <a href="../controllers/delete.php?id=${id} &target=${table}"><button class="py-1 px-2 rounded-md bg-red-500 text-white text-2xl font-bold cursor-pointer">Delete</button></a>
+          <a href="../controllers/delete.php?id=${id}&target=${table}"><button class="py-1 px-2 rounded-md bg-red-500 text-white text-2xl font-bold cursor-pointer">Delete</button></a>
         </div>
       </div>`;
   main.appendChild(newSection);
