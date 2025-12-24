@@ -7,8 +7,8 @@ $email = htmlspecialchars(trim($_POST['email']));
 $password = htmlspecialchars(trim($_POST['password']));
 $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
 
-$user = new Auth($email,$password);
-$signed_in = $user->register($name);
+$auth_user = new Auth($email,$password);
+$signed_in = $auth_user->register($name);
 if($signed_in){
   header("Location:../views/index.php");
 exit;
