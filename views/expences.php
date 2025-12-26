@@ -6,6 +6,9 @@ require '../controllers/Expence.php';
   exit;
 }
 $userID = $_SESSION['userId'];
+
+$conn = new Database('localhost','money_wallet','root','');
+              $pdo = $conn->connect(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -186,10 +189,7 @@ $userID = $_SESSION['userId'];
             <?php  
           }
             } else{   
-              
-              $conn = new Database('localhost','money_wallet','root','');
-              $pdo = $conn->connect();  
-
+               
               $object = new Expence($userID,0,'','');
                     $expences = $object->getAll($pdo);
                       unset($_SESSION['backup']);
