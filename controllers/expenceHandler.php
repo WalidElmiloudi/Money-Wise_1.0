@@ -1,14 +1,19 @@
 <?php
 
-require '../configs/config.php';
 session_start();
+require 'Expence.php';
 
-$amount = $_POST['amount'];
-$type = $_POST['category'];
-$description = $_POST['description'];
+$amount = htmlspecialchars(trim($_POST['amount']));
+$type = htmlspecialchars(trim($_POST['category']));
+$description = htmlspecialchars(trim($_POST['description']));
 $userID = $_SESSION['userId'];
 
-$conn->query("INSERT INTO expences (montant,description,category,userID) VALUES ('$amount','$description','$type','$userID')");
+$conn = new Database('localhost','money_wallet','root','');
+$pdo = $conn->connect();
+
+$expence = new Expence($userID,$amount,$type,$description);
+
+$expence->add($pdo);
 
 header("Location: ../views/expences.php");
 exit;

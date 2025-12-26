@@ -1,11 +1,11 @@
 <?php
-
-    require '../configs/config.php';
+require '../controllers/Expence.php';
     session_start();
     if(!isset($_SESSION['userId'])){
   header("Location: index.php");
   exit;
 }
+$userID = $_SESSION['userId'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +52,7 @@
         <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="dashboard.php">Dashboard</a></h1>
         <h1 class=" text-4xl font-bold  py-2 px-4 w-fit  hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="incomes.php">Incomes</a></h1>
         <h1 class=" text-4xl font-bold text-white bg-gray-800 rounded-full py-2 px-4 w-fit"><a href="#">Expences</a></h1>
+        <h1 class="text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white flex items-center justify-center cursor-pointer"><i class="fi fi-rs-sign-out-alt"></i><a href="../controllers/logout.php">LOGOUT</a></h1>
     </div>
     <div class ="w-full h-full bg-[#f2f4f7] flex justify-center items-center">
        <div class = "w-[90%] h-[90%] bg-white rounded-lg flex flex-col justify-center gap-2 items-center p-4">
@@ -184,11 +185,15 @@
             </div>
             <?php  
           }
-            } else{        
-              $result = $conn->query("SELECT * FROM expences WHERE expences.userID = {$_SESSION['userId']}");
-              if ($result->num_rows > 0) {
-                unset($_SESSION['backup']);
-                  while ($expence = $result->fetch_assoc()) {
+            } else{   
+              
+              $conn = new Database('localhost','money_wallet','root','');
+              $pdo = $conn->connect();  
+
+              $object = new Expence($userID,0,'','');
+                    $expences = $object->getAll($pdo);
+                      unset($_SESSION['backup']);
+                        foreach($expences as $expence)  {
                     $_SESSION['backup'][] = $expence;
                       $id = $expence['id'];
                   ?>
@@ -206,7 +211,7 @@
         </button>
             </div>
             <?php }
-                }}
+                }
                 if(isset($_SESSION['filteredArray'])){
                   $_SESSION['backup'] = $_SESSION['filteredArray'];
                 }

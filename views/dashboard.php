@@ -58,6 +58,7 @@
           <h1 class=" text-4xl font-bold text-white py-2 px-4 w-fit bg-gray-800 rounded-full"><a href="#">Dashboard</a></h1>
           <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="incomes.php">Incomes</a></h1>
           <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="expences.php">Expences</a></h1>
+          <h1 class="text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white flex items-center justify-center cursor-pointer"><i class="fi fi-rs-sign-out-alt"></i><a href="../controllers/logout.php">LOGOUT</a></h1>
         </div>
       </div>
       <div class="xl:order-2 col-span-1 xl:col-span-4 xl:row-span-2 row-span-2 bg-white shadow-md rounded-md flex justify-center items-center">
@@ -100,12 +101,15 @@
                 <div id="selectContainer" class="flex flex-row gap-1 items-center justify-between">
                   
                 </div>
-                <button class="bg-blue-500 text-white font-bold text-3xl py-2 px-4 rounded-md">APPLY</button>
+                <button class="bg-blue-500 text-white font-bold text-3xl py-2 px-4 rounded-md cursor-pointer">APPLY</button>
               </form>
               <?php
               if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $table_name = htmlspecialchars(trim($_POST['type']));
-              $category = htmlspecialchars(trim($_POST['category']));
+                if(isset($_POST['category'])){
+
+                  $category = htmlspecialchars(trim($_POST['category']));
+                }
 
               if($table_name !== 'none'){
                 $category_total = $statistic->getTotalByCategory($pdo,$table_name,$category);
@@ -144,7 +148,7 @@
       <div class="xl:order-4 col-span-2 xl:col-span-3 xl:row-span-8 row-span-4 bg-slate-200 shadow-md rounded-md grid grid-rows-3 gap-2">
         <div class="col-span-1  rounded-lg bg-white flex flex-col justify-evenly">
             <h1 class="text-[#021c3b] text-2xl xl:text-3xl 2xl:text-5xl font-bold">Balance :</h1>
-            <h2 class="text-[#021c3b] text-3xl xl:text-4xl 2xl:text-5xl font-bold"><?php echo $_SESSION['balance']; ?> $</h2>
+            <h2 class="text-[#021c3b] text-3xl xl:text-4xl 2xl:text-5xl font-bold"><?php echo $_SESSION['balance']>0? $_SESSION['balance']:0;?> $</h2>
         </div>
         <div class="col-span-1   rounded-lg bg-white flex flex-col justify-evenly">
           <h1 class="text-[#021c3b] text-2xl 2xl:text-4xl font-bold">Month Incomes :</h1>

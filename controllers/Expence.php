@@ -4,47 +4,46 @@ require_once 'Database.php';
 
 class Expence{
   private $user_id;
+  private $amount;
+  private $category;
+  private $description;
 
-  function __construct($user_id){
+  function __construct($user_id,$amount,$category,$description){
     $this->user_id = $user_id;
+    $this->amount = $amount;
+    $this->category = $category;
+    $this->description = $description;
   }
 
-  public function add($amount,$category,$description){
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
+  public function add($pdo)
+  {
     $stmt = $pdo->prepare("INSERT INTO expences (montant,description,category,userID) VALUES (:montant,:description,:category,:userID)");
     $stmt->execute([
-      ':montant'=>$amount,
-      ':description'=>$description,
-      ':category'=>$category,
+      ':montant'=>$this->amount,
+      ':description'=>$this->description,
+      ':category'=>$this->category,
       ':userID'=>$this->user_id
     ]);
   }
 
-  public function update($amount,$category,$description,$expence_id){
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
+  public function update($pdo,$expence_id){
     $stmt = $pdo->prepare("UPDATE expences SET montant = :montant,description = :description,category = :category WHERE id = :id");
     $stmt->execute([
-      ':montant'=>$amount,
-      ':description'=>$description,
-      ':category'=>$category,
+      ':montant'=>$this->amount,
+      ':description'=>$this->description,
+      ':category'=>$this->category,
       ':id'=>$expence_id
     ]);
   }
 
-  public function delete($expence_id){
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
+  public function delete($pdo,$expence_id){
     $stmt = $pdo->prepare("DELETE FROM expences WHERE id = :id");
     $stmt->execute([
       ':id'=>$expence_id
     ]);
     }
 
-  public function getAll(){
-    $conn = new Database('localhost','money_wallet','root','');
-    $pdo = $conn->connect();
+  public function getAll($pdo){
     $stmt = $pdo->prepare("SELECT * FROM expences WHERE userID = :user_id");
     $stmt->execute([
       ':user_id'=>$this->user_id

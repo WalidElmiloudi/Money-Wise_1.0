@@ -1,11 +1,15 @@
 <?php
-
-    require '../configs/config.php';
+    require '../controllers/Income.php';
     session_start();
     if(!isset($_SESSION['userId'])){
   header("Location: index.php");
   exit;
 }
+$userID = $_SESSION['userId'];
+
+$conn = new Database('localhost','money_wallet','root','');
+$pdo = $conn->connect();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +56,7 @@
         <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="dashboard.php">Dashboard</a></h1>
         <h1 class=" text-4xl font-bold rounded-full py-2 px-4 w-fit bg-gray-800 text-white"><a href="#">Incomes</a></h1>
         <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="expences.php">Expences</a></h1>
+        <h1 class="text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white flex items-center justify-center cursor-pointer"><i class="fi fi-rs-sign-out-alt"></i><a href="../controllers/logout.php">LOGOUT</a></h1>
     </div>
     <div class ="w-full h-full bg-[#f2f4f7] flex justify-center items-center">
        <div class = "w-[90%] h-[90%] bg-white rounded-lg flex flex-col justify-center gap-2 items-center p-4">
@@ -200,10 +205,11 @@
             <?php
                     }
                 } else {
-                    $result = $conn->query("SELECT * FROM incomes WHERE incomes.userID = {$_SESSION['userId']}");
-                    if ($result->num_rows > 0) {
+
+                    $object = new Income($userID,0,"","");
+                    $incomes = $object->getAll($pdo);
                       unset($_SESSION['backup']);
-                        while ($income = $result->fetch_assoc()) {
+                        foreach($incomes as $income) {
                           $_SESSION['backup'][]=$income;
                             $id = $income['id'];
                         ?>
@@ -220,10 +226,9 @@
             edit
         </button>
             </div>
-            <?php }
+            <?php }}
                         
-                    }
-                }
+              
                 if(isset($_SESSION['filteredArray'])){
                   $_SESSION['backup'] = $_SESSION['filteredArray'];
                 }

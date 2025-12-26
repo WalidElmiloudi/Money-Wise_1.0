@@ -1,5 +1,6 @@
 <?php
 
+
 class Database{
   private $host;
   private $db_name;
@@ -28,6 +29,8 @@ class Database{
   }
 }
 
+// $conn = new Database("localhost","money_wallet","root","");
+// $pdo = $conn->connect();
 
 
 ?>

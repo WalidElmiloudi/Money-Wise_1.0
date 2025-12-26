@@ -7,14 +7,17 @@ $id = $_GET['id'];
 $target = $_GET['target'];
 $userID = $_SESSION['userId'];
 
+$conn = new Database('localhost','money_wallet','root','');
+$pdo = $conn->connect();
+
 switch($target){
-  case 'incomes' : $object = new Income($userID);
+  case 'incomes' : $object = new Income($userID,"","","");
                   break;
-  case 'expences' : $object = new Expence($userID);
+  case 'expences' : $object = new Expence($userID,"","","");
                   break;
 }
 
-$object->delete($id);
+$object->delete($pdo,$id);
 
 header("Location: ../views/$target.php");
 exit;
