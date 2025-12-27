@@ -212,7 +212,7 @@ if(typeSelect){
     selectValue = e.target.value;
     selectContainer = document.getElementById("selectContainer");
     switch(selectValue){
-      case 'Incomes' : 
+      case 'incomes' : 
                       selectContainer.innerHTML = `<label for="category"
             class="text-2xl font-bold">Category :</label>
           <select class="text-2xl bg-[#f5f5f5] h-15 rounded-md" name="category" id="category">
@@ -241,7 +241,7 @@ if(typeSelect){
           </select>`
 
       break;
-      case 'Expences' : 
+      case 'expences' : 
                       selectContainer.innerHTML = `<label class="text-2xl font-bold" for="Category">Category :</label>
                     <select class="text-2xl bg-[#f5f5f5] h-15 rounded-md" name="category" id="category">
             <option value="Housing"

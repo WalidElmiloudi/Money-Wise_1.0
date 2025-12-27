@@ -95,8 +95,8 @@
                 <label class="text-2xl font-bold " for="type">Choose The Type :</label>
                 <select class="text-2xl bg-[#f5f5f5] h-15 rounded-md" name="type" id="typeSelect">
                   <option value="none">Choose</option>
-                  <option value="Incomes">Incomes</option>
-                  <option value="Expences">Expences</option>
+                  <option value="incomes">Incomes</option>
+                  <option value="expences">Expences</option>
                 </select>
                 <div id="selectContainer" class="flex flex-row gap-1 items-center justify-between">
                   
