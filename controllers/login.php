@@ -1,5 +1,7 @@
 <?php
-require 'User.php';
+require_once '../vendor/autoload.php';
+
+use Controllers\User;
 
 session_start();
 

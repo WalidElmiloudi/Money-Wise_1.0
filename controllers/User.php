@@ -1,5 +1,7 @@
 <?php
 
+namespace Controllers;
+
 require_once '../vendor/autoload.php';
 
 use Controllers\Database;

@@ -1,6 +1,8 @@
 <?php
 
-require 'User.php';
+require_once '../vendor/autoload.php';
+
+use Controllers\User;
 
 $name = htmlspecialchars(trim($_POST['firstname']))." ".htmlspecialchars(trim($_POST['lastname']));
 $email = htmlspecialchars(trim($_POST['email']));
