@@ -1,51 +1,99 @@
-# Money-Wise
+Money-Wise
 
-A simple personal finance / expense tracker web application built with PHP, JavaScript and Tailwind CSS — helping you manage incomes and expenses and track your financial health.
+A simple personal finance / expense tracker web application built with PHP (OOP), Composer autoloading, JavaScript, and Tailwind CSS — helping you manage incomes and expenses and track your financial health.
 
-## 📋 Table of Contents
+📋 Table of Contents
 
-- [About](#about)  
-- [Features](#features)   
-- [Getting Started](#getting-started)  
-  - [Prerequisites](#prerequisites)  
-  - [Installation](#installation)  
+About
 
-## About
+Features
 
-Money-Wise is a lightweight finance management tool designed for individuals who want a simple and self-hosted solution to track incomes and expenses.  
-It’s built using PHP for server-side logic, with JavaScript and Tailwind CSS for front-end — no heavy frameworks, easy to deploy.  
+Getting Started
+
+Prerequisites
+
+Installation
+
+Usage
+
+About
+
+Money-Wise is a lightweight finance management tool designed for individuals who want a simple, self-hosted solution to track incomes and expenses.
+
+It’s now refactored using Object-Oriented Programming (OOP), with:
+
+Namespaced classes for controllers, models, and helpers
+
+Singleton Database class for shared PDO connection
+
+Composer PSR-4 autoloading for clean and modular code
+
 The goal is to keep things minimal yet functional, making it easy to understand, customize, and run on any standard PHP-capable environment.
 
-## Features
+Features
 
-- Add, edit and delete income entries  
-- Add, edit and delete expense entries  
-- View income, expense, and balance summaries  
-- Simple, clean and responsive UI with Tailwind CSS  
+Add, edit, and delete income entries
 
-## Getting Started
+Add, edit, and delete expense entries
 
-### Prerequisites
+View income, expense, and balance summaries
 
-- A web server capable of running PHP (e.g. Apache, Nginx)  
-- PHP (version 7.x or higher recommended)  
-- A MySQL (or compatible) database server  
-- Browser for accessing the web interface  
+OOP architecture for maintainable and reusable code
 
-### Installation
+Shared database connection via singleton pattern
 
-```bash
-# 1. Clone the repo
+Composer autoloading for classes (no manual require needed)
+
+Simple, clean, and responsive UI with Tailwind CSS
+
+Getting Started
+Prerequisites
+
+A web server capable of running PHP (e.g., Apache, Nginx)
+
+PHP 7.4+ recommended
+
+MySQL (or compatible) database server
+
+Composer installed (for autoloading classes)
+
+Browser for accessing the web interface
+
+Installation
+
+Clone the repository
+
 git clone https://github.com/WalidElmiloudi/Money-Wise.git
+cd Money-Wise
 
-# 2. Import the database schema
+
+Install dependencies via Composer
+
+composer install
+
+
+Import the database schema
+
 mysql -u YOUR_DB_USER -p YOUR_DB_NAME < db.sql
 
-# 3. Configure database credentials
-#    Edit `config.php` and set DB host, name, user, password.
 
-# 4. Place project in your web-server root
-#    e.g., /var/www/html/money-wise or your local development folder
+Configure database credentials
 
-# 5. Open in browser
-#    Visit http://localhost/money-wise (or your server URL)
+Edit config.php (or controllers/Database.php if using singleton DB) and set:
+
+// Database host, name, username, password
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'money_wallet');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+
+
+Place the project in your web-server root
+
+Example local: /var/www/html/money-wise
+
+XAMPP Windows: C:\xampp\htdocs\Money-Wise
+
+Open in browser
+
+http://localhost/money-wise
