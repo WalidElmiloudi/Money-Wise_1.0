@@ -1,5 +1,7 @@
 <?php
-    require '../controllers/Income.php';
+    require_once '../vendor/autoload.php';
+
+    use Controllers\Income;
     session_start();
     if(!isset($_SESSION['userId'])){
   header("Location: index.php");
@@ -7,8 +9,7 @@
 }
 $userID = $_SESSION['userId'];
 
-$conn = new Database('localhost','money_wallet','root','');
-$pdo = $conn->connect();
+$object = new Income($userID,0,"","");
 
 ?>
 <!DOCTYPE html>
@@ -124,10 +125,13 @@ $pdo = $conn->connect();
                 <option value="CURMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURMONTH" ? "selected" : "");}?>>This Month</option>
                 <option value="LASMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASMONTH" ? "selected" : "");}?>>Last Month</option>
                 <option value="CURYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURYEAR" ? "selected" : "");}?>>This Year</option>
-                <option value="LASYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASYEAR" ? "selected" : "");}?>>Last Year</option>
+                <option value="LASTYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASYEAR" ? "selected" : "");}?>>Last Year</option>
               </select>
               <button type="submit" class="py-1 px-2 text-xs xl:text-base bg-blue-500 text-white font-bold rounded-md cursor-pointer">Apply</button>
             </form>
+            <?php
+            unset($_SESSION['date'],$_SESSION['category']);
+            ?>
               </div>
           </div>
           <div class="hidden 2xl:flex w-full  flex-row items-center justify-end gap-2">
@@ -166,7 +170,7 @@ $pdo = $conn->connect();
                 <option value="CURMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURMONTH" ? "selected" : "");}?>>This Month</option>
                 <option value="LASMONTH"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASMONTH" ? "selected" : "");}?>>Last Month</option>
                 <option value="CURYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "CURYEAR" ? "selected" : "");}?>>This Year</option>
-                <option value="LASYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASYEAR" ? "selected" : "");}?>>Last Year</option>
+                <option value="LASTYEAR"<?php if (isset($_SESSION['date'])) {echo($_SESSION['date'] === "LASYEAR" ? "selected" : "");}?>>Last Year</option>
               </select>
               <button type="submit" class="py-1 px-2 bg-blue-500 text-white font-bold rounded-md cursor-pointer">Apply</button>
             </form>
@@ -205,9 +209,7 @@ $pdo = $conn->connect();
             <?php
                     }
                 } else {
-
-                    $object = new Income($userID,0,"","");
-                    $incomes = $object->getAll($pdo);
+                    $incomes = $object->getAll();
                       unset($_SESSION['backup']);
                         foreach($incomes as $income) {
                           $_SESSION['backup'][]=$income;

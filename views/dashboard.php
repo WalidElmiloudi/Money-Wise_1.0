@@ -1,6 +1,9 @@
 <?php
 
-    require '../controllers/Statistic.php';
+    require_once '../vendor/autoload.php';
+
+    use Controllers\Statistic;
+    
     session_start();
     if(!isset($_SESSION['userId'])){
   header("Location:index.php");
@@ -67,16 +70,13 @@
               $userID = $_SESSION['userId'] ;
               $month = date('n');
 
-              $conn = new Database('localhost','money_wallet','root','');
-              $pdo = $conn->connect();
-
               $statistic = new Statistic($userID);
 
-              $total_incomes = $statistic->getTotal($pdo,'incomes');
-              $total_expences = $statistic->getTotal($pdo,'expences');
-              $balance = $statistic->getBalance($pdo);
-              $month_incomes = $statistic->getMonthlyTotal($pdo,'incomes',$month);
-              $month_expences = $statistic->getMonthlyTotal($pdo,'expences',$month);
+              $total_incomes = $statistic->getTotal('incomes');
+              $total_expences = $statistic->getTotal('expences');
+              $balance = $statistic->getBalance();
+              $month_incomes = $statistic->getMonthlyTotal('incomes',$month);
+              $month_expences = $statistic->getMonthlyTotal('expences',$month);
 
               $_SESSION['monthTotalIncomes'] = $month_incomes > 0 ? $month_incomes:0;
               $_SESSION['totalIncomes'] = $total_incomes>0 ? $total_incomes:0;
@@ -112,7 +112,7 @@
                 }
 
               if($table_name !== 'none'){
-                $category_total = $statistic->getTotalByCategory($pdo,$table_name,$category);
+                $category_total = $statistic->getTotalByCategory($table_name,$category);
               }
               }
               ?>
@@ -166,10 +166,10 @@ $monthlyIncomes = [];
 $monthlyExpences = [];
 
 for ($m = 1; $m <= 12; $m++) {
-    $income = $statistic->getMonthlyTotal($pdo,'incomes',$m) ?? 0;
+    $income = $statistic->getMonthlyTotal('incomes',$m) ?? 0;
     $monthlyIncomes[] = $income;
 
-    $expense = $statistic->getMonthlyTotal($pdo,'expences',$m) ?? 0;
+    $expense = $statistic->getMonthlyTotal('expences',$m) ?? 0;
     $monthlyExpences[] = $expense;
 }
 ?>

@@ -1,23 +1,22 @@
 <?php
 
-require_once 'Database.php';
+namespace Controllers;
 
-class Expence{
-  private $user_id;
-  private $amount;
-  private $category;
-  private $description;
+require_once '../vendor/autoload.php';
+
+use Controllers\Database;
+use PDO;
+use Controllers\Income;
+
+class Expence extends Income{
 
   function __construct($user_id,$amount,$category,$description){
-    $this->user_id = $user_id;
-    $this->amount = $amount;
-    $this->category = $category;
-    $this->description = $description;
+    parent::__construct($user_id,$amount,$category,$description);
   }
 
-  public function add($pdo)
+  public function add()
   {
-    $stmt = $pdo->prepare("INSERT INTO expences (montant,description,category,userID) VALUES (:montant,:description,:category,:userID)");
+    $stmt = $this->pdo->prepare("INSERT INTO expences (montant,description,category,userID) VALUES (:montant,:description,:category,:userID)");
     $stmt->execute([
       ':montant'=>$this->amount,
       ':description'=>$this->description,
@@ -26,8 +25,8 @@ class Expence{
     ]);
   }
 
-  public function update($pdo,$expence_id){
-    $stmt = $pdo->prepare("UPDATE expences SET montant = :montant,description = :description,category = :category WHERE id = :id");
+  public function update($expence_id){
+    $stmt = $this->pdo->prepare("UPDATE expences SET montant = :montant,description = :description,category = :category WHERE id = :id");
     $stmt->execute([
       ':montant'=>$this->amount,
       ':description'=>$this->description,
@@ -36,15 +35,15 @@ class Expence{
     ]);
   }
 
-  public function delete($pdo,$expence_id){
-    $stmt = $pdo->prepare("DELETE FROM expences WHERE id = :id");
+  public function delete($expence_id){
+    $stmt = $this->pdo->prepare("DELETE FROM expences WHERE id = :id");
     $stmt->execute([
       ':id'=>$expence_id
     ]);
     }
 
-  public function getAll($pdo){
-    $stmt = $pdo->prepare("SELECT * FROM expences WHERE userID = :user_id");
+  public function getAll(){
+    $stmt = $this->pdo->prepare("SELECT * FROM expences WHERE userID = :user_id");
     $stmt->execute([
       ':user_id'=>$this->user_id
     ]);

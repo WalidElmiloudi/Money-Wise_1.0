@@ -1,15 +1,14 @@
 <?php
 
-require 'Income.php';
-require 'Expence.php';
+require_once '../vendor/autoload.php';
+
+use Controllers\Income;
+use Controllers\Expence;
 
 $amount = htmlspecialchars(trim($_POST['amount']));
 $type = htmlspecialchars(trim($_POST['category']));
 $description = htmlspecialchars(trim($_POST['description']));
 $userID = $_SESSION['userId'];
-
-$conn = new Database('localhost','money_wallet','root','');
-$pdo = $conn->connect();
 
 $id = $_GET['id'];
 $target = $_GET['target'];
@@ -21,7 +20,7 @@ switch($target){
                    break;
 }
 
-$object->update($pdo,$id);
+$object->update($id);
 
 header("Location: ../views/$target.php");
 exit;

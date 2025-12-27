@@ -1,13 +1,12 @@
 <?php
 
-require 'Category.php';
-require 'Income.php';
-require 'Expence.php';
+require_once '../vendor/autoload.php';
+
+use Controllers\Income;
+use Controllers\Expence;
+use Controllers\Category;
 
 session_start();
-
-$conn = new Database('localhost','money_wallet','root','');
-$pdo = $conn->connect();
 
 $category = $_POST['category'];
 $date     = $_POST['date'];
@@ -39,7 +38,7 @@ if ($category != "All")
                                 $condition = "AND t.category = '$category' AND YEAR(date) = $year";
                                 break;
 
-            case "LASTYEAR":    $year = date('Y') - 1;
+            case "LASTYEAR":    $year = date('Y')-1;
                                 $condition = "AND t.category = '$category' AND YEAR(date) = $year";
                                 break;
 
@@ -47,14 +46,14 @@ if ($category != "All")
 
         
 
-        $_SESSION['filteredArray'] = $category_object->getByCategoryDate($pdo,$condition);
+        $_SESSION['filteredArray'] = $category_object->getByCategoryDate($condition);
 
     } 
     else
     {
         
         $condition = "AND t.category = '$category'";
-        $_SESSION['filteredArray'] = $category_object->getByCategoryDate($pdo,$condition);
+        $_SESSION['filteredArray'] = $category_object->getByCategoryDate($condition);
     }
 
 } 
@@ -78,12 +77,12 @@ else
                                 $condition = "AND YEAR(date) = $year";
                                 break;
 
-            case "LASYEAR":     $year = date('Y') - 1;
-                                $condition = " AND YEAR(date) = $year";
-                                break;
+            case "LASTYEAR":     $year = date('Y')-1;
+                                 $condition = " AND YEAR(date) = $year";
+                                 break;
         }
 
-        $_SESSION['filteredArray'] = $category_object->getByCategoryDate($pdo,$condition);
+        $_SESSION['filteredArray'] = $category_object->getByCategoryDate($condition);
     } 
     else
     {
@@ -94,7 +93,7 @@ else
            case 'expences' : $object = new Expence($userID,$amount,$type,$description);
                    break;
        }
-       $_SESSION['filteredArray'] = $object->getAll($pdo);
+       $_SESSION['filteredArray'] = $object->getAll();
     }
 }
 header("Location: ../views/$table.php");
