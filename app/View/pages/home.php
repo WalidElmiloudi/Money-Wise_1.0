@@ -1,7 +1,6 @@
 <?php
-session_start();
-if(!isset($_SESSION['userId'])){
-  header("Location: index.php");
+if(!isset($_SESSION['userID'])){
+  header("Location: /Money-Wise_1.0/Home/index");
   exit;
 }
 
@@ -34,15 +33,15 @@ if(!isset($_SESSION['userId'])){
     <div class="xl:order-1 hidden xl:flex row-span-8 col-span-2 2xl:col-span-2 bg-white">
        <div class="hidden w-[30%] bg-white h-full xl:flex flex-col justify-center gap-20 pl-10">
       <h1 class=" text-4xl font-bold text-white bg-gray-800 rounded-full py-2 px-4 w-fit "><a href="#">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="dashboard.php">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold  py-2 px-4 w-fit  hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="incomes.php">Incomes</a></h1>
-        <h1 class=" text-4xl font-bold  py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="expences.php">Expences</a></h1>
+        <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/Home/dashboard">Dashboard</a></h1>
+        <h1 class=" text-4xl font-bold  py-2 px-4 w-fit  hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/Home/income">Incomes</a></h1>
+        <h1 class=" text-4xl font-bold  py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/Home/expence">Expences</a></h1>
         <h1 class="text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white flex items-center justify-center cursor-pointer"><i class="fi fi-rs-sign-out-alt"></i><a href="../controllers/logout.php">LOGOUT</a></h1>
     </div>
     </div>
     <div
       class="xl:order-2 row-span-1 rounded-md bg-white shadow-md flex justify-center items-center xl:row-span-3 xl:col-span-4 2xl:col-span-7">
-      <p class="text-3xl font-bold text-[#021c3b] 2xl:text-5xl">Welcome <?php echo htmlspecialchars($_SESSION['username']); ?> !</p>
+      <p class="text-3xl font-bold text-[#021c3b] 2xl:text-5xl">Welcome <?php echo htmlspecialchars($_SESSION['userNAME']); ?> !</p>
     </div>
     <div
       class="xl:order-4 row-span-3 rounded-md bg-white shadow-md flex justify-center items-center xl:row-span-5 xl:col-span-4 2xl:col-span-7">

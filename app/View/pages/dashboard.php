@@ -1,12 +1,9 @@
 <?php
 
-    require_once '../vendor/autoload.php';
-
     use Controllers\Statistic;
     
-    session_start();
-    if(!isset($_SESSION['userId'])){
-  header("Location:index.php");
+    if(!isset($_SESSION['userID'])){
+    header("Location: /Money-Wise_1.0/Home/index");
   exit;
 }
 ?>

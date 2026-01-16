@@ -24,9 +24,9 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         array (
             'Dompdf\\' => 7,
         ),
-        'C' =>
+        'A' =>
         array (
-            'Controllers\\' => 12,
+            'App\\' => 4,
         ),
     );
 
@@ -51,9 +51,9 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
-        'Controllers\\' =>
+        'App\\' =>
         array (
-            0 => __DIR__ . '/../..' . '/controllers',
+            0 => __DIR__ . '/../..' . '/app',
         ),
     );
 

@@ -1,13 +1,12 @@
 <?php
-    require_once '../vendor/autoload.php';
 
     use Controllers\Income;
-    session_start();
-    if(!isset($_SESSION['userId'])){
-  header("Location: index.php");
+
+    if(!isset($_SESSION['userID'])){
+  header("Location: /Money-Wise_1.0/Home/index");
   exit;
 }
-$userID = $_SESSION['userId'];
+$userID = $_SESSION['userID'];
 
 $object = new Income($userID,0,"","");
 

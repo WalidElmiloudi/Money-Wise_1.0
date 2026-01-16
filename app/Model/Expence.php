@@ -1,18 +1,14 @@
 <?php
 
-namespace Controllers;
+namespace App\Model;
 
 require_once '../vendor/autoload.php';
 
-use Controllers\Database;
+use App\Core\Database;
 use PDO;
-use Controllers\Income;
+use App\Model\Income;
 
 class Expence extends Income{
-
-  function __construct($user_id,$amount,$category,$description){
-    parent::__construct($user_id,$amount,$category,$description);
-  }
 
   public function add()
   {

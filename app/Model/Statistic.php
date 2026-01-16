@@ -1,10 +1,11 @@
 <?php
 
-namespace Controllers;
+namespace App\Model;
 
 require_once '../vendor/autoload.php';
 
-use Controllers\Database;
+use App\Core\Database;
+
 use PDO;
 
 class Statistic{

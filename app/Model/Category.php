@@ -1,8 +1,8 @@
 <?php
 
-namespace Controllers;
+namespace App\Model;
 
-use Controllers\Database;
+use App\Core\Database;
 use PDO;
 
 class Category
