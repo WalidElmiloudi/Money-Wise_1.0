@@ -1,11 +1,8 @@
 <?php
-
-    use Controllers\Statistic;
-    
-    if(!isset($_SESSION['userID'])){
-    header("Location: /Money-Wise_1.0/Home/index");
-  exit;
-}
+    if(!isset($_SESSION['userID'])) {
+       header("Location: /Money-Wise_1.0/Home/index");
+       exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -54,87 +51,43 @@
     <div class="w-full h-full grid grid-cols-2 xl:grid-cols-14 grid-rows-8 gap-2 px-2">
       <div class="xl:order-1 hidden xl:flex col-span-3 row-span-8 bg-white shadow-md rounded-md">
         <div class="w-full h-full flex flex-col justify-center gap-20 pl-10 -mt-5">
-          <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="home.php">Home</a></h1>
+          <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/home/home/">Home</a></h1>
           <h1 class=" text-4xl font-bold text-white py-2 px-4 w-fit bg-gray-800 rounded-full"><a href="#">Dashboard</a></h1>
-          <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="incomes.php">Incomes</a></h1>
-          <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="expences.php">Expences</a></h1>
+          <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/income/index/">Incomes</a></h1>
+          <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/expence/index/">Expences</a></h1>
           <h1 class="text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white flex items-center justify-center cursor-pointer"><i class="fi fi-rs-sign-out-alt"></i><a href="../controllers/logout.php">LOGOUT</a></h1>
         </div>
       </div>
       <div class="xl:order-2 col-span-1 xl:col-span-4 xl:row-span-2 row-span-2 bg-white shadow-md rounded-md flex justify-center items-center">
-          <?php
-              
-              $userID = $_SESSION['userId'] ;
-              $month = date('n');
-
-              $statistic = new Statistic($userID);
-
-              $total_incomes = $statistic->getTotal('incomes');
-              $total_expences = $statistic->getTotal('expences');
-              $balance = $statistic->getBalance();
-              $month_incomes = $statistic->getMonthlyTotal('incomes',$month);
-              $month_expences = $statistic->getMonthlyTotal('expences',$month);
-
-              $_SESSION['monthTotalIncomes'] = $month_incomes > 0 ? $month_incomes:0;
-              $_SESSION['totalIncomes'] = $total_incomes>0 ? $total_incomes:0;
-
-              ?>
                   <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
                   <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Incomes:  </h1>
-                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl font-bold text-green-600" ><?php echo ($total_incomes>0 ? $total_incomes : 0) ?> $ </h1>
+                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl font-bold text-green-600"> <?= $totalIncomes ?> $ </h1>
                   </div >
-               <?php
-               ?>
       </div>
       <div class="xl:order-5 col-span-2 row-span-2 xl:col-span-8 xl:row-span-2 bg-white shadow-md rounded-md grid grid-cols-4 p-2 gap-2">
           <div class="col-span-2 flex flex-col">
-              <form class="h-full flex flex-col justify-center gap-1" action="dashboard.php" method="post">
+              <form id="category-total-form" class="h-full flex flex-col justify-center gap-1" action="/Money-Wise_1.0/dashboard/getCategoryTotal/" method="post">
                 <label class="text-2xl font-bold " for="type">Choose The Type :</label>
                 <select class="text-2xl bg-[#f5f5f5] h-15 rounded-md" name="type" id="typeSelect">
                   <option value="none">Choose</option>
-                  <option value="incomes">Incomes</option>
-                  <option value="expences">Expences</option>
+                  <option value="income">Incomes</option>
+                  <option value="expence">Expences</option>
                 </select>
                 <div id="selectContainer" class="flex flex-row gap-1 items-center justify-between">
                   
                 </div>
                 <button class="bg-blue-500 text-white font-bold text-3xl py-2 px-4 rounded-md cursor-pointer">APPLY</button>
               </form>
-              <?php
-              if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                $table_name = htmlspecialchars(trim($_POST['type']));
-                if(isset($_POST['category'])){
-
-                  $category = htmlspecialchars(trim($_POST['category']));
-                }
-
-              if($table_name !== 'none'){
-                $category_total = $statistic->getTotalByCategory($table_name,$category);
-              }
-              }
-              ?>
           </div>
           <div class = "col-span-2 bg-[#f5f5f5] rounded-md flex justify-center items-center">
-              <h1 class="text-4xl font-bold"><?php if(isset($category_total)){ echo $category_total;} else{echo '0';}?>$</h1>
+              <h1 id="category-total-result-container" class="text-4xl font-bold">0 $</h1>
           </div>
       </div>
       <div class="xl:order-3 col-span-1 row-span-2 xl:col-span-4 xl:row-span-2 bg-white shadow-md rounded-md">
-
-              <?php
-
-                  $_SESSION['monthTotalExpences'] = $month_expences>0 ? $month_expences:0;
-                  $_SESSION['totalExpences'] = $total_expences ? $total_expences:0;
-
-                  ?>
                   <div class  = "w-full h-full bg-white  rounded-md flex flex-col justify-around" >
                   <h1 class   = "text-2xl xl:text-4xl font-bold text-[#021c3b]">Total Expences:  </h1>
-                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl  font-bold text-red-600 pl-5" ><?php echo ($total_expences>0 ? $total_expences : 0) ?> $ </h1>
+                  <h1 class   = "text-xl xl:text-3xl 2xl:text-4xl  font-bold text-red-600 pl-5"><?= $totalExpences ?> $ </h1>
                   </div >
-               <?php
-                   
-                   $_SESSION['balance'] = $_SESSION['totalIncomes'] - $_SESSION['totalExpences'];
-               ?>
-
       </div>
       <div class="xl:order-6 col-span-2 xl:row-span-4 xl:col-span-8 row-span-2 bg-white shadow-md rounded-md">
         <div class="w-full h-[90%] px-4 flex justify-center items-center">
@@ -145,35 +98,35 @@
       <div class="xl:order-4 col-span-2 xl:col-span-3 xl:row-span-8 row-span-4 bg-slate-200 shadow-md rounded-md grid grid-rows-3 gap-2">
         <div class="col-span-1  rounded-lg bg-white flex flex-col justify-evenly">
             <h1 class="text-[#021c3b] text-2xl xl:text-3xl 2xl:text-5xl font-bold">Balance :</h1>
-            <h2 class="text-[#021c3b] text-3xl xl:text-4xl 2xl:text-5xl font-bold"><?php echo $_SESSION['balance']>0? $_SESSION['balance']:0;?> $</h2>
+            <h2 class="text-[#021c3b] text-3xl xl:text-4xl 2xl:text-5xl font-bold"><?= round($balance,2) ?> $</h2>
         </div>
         <div class="col-span-1   rounded-lg bg-white flex flex-col justify-evenly">
           <h1 class="text-[#021c3b] text-2xl 2xl:text-4xl font-bold">Month Incomes :</h1>
-            <h2 class="text-green-600 text-3xl xl:text-4xl 2xl:text-5xl font-bold"><?php echo $_SESSION['monthTotalIncomes']; ?> $</h2>
+            <h2 class="text-green-600 text-3xl xl:text-4xl 2xl:text-5xl font-bold"><?= $monthIncomes ?> $</h2>
         </div>
         <div class="col-span-1  rounded-lg bg-white flex flex-col justify-evenly">
           <h1 class="text-[#021c3b] text-2xl 2xl:text-4xl font-bold">Month Expences :</h1>
-            <h2 class="text-red-600 text-3xl xl:text-4xl 2xl:text-5xl font-bold"><?php echo $_SESSION['monthTotalExpences']; ?> $</h2>
+            <h2 class="text-red-600 text-3xl xl:text-4xl 2xl:text-5xl font-bold"><?= $monthExpences ?> $</h2>
         </div>
       </div>
     </div>
   </main>
   <?php
-$monthlyIncomes = [];
-$monthlyExpences = [];
+// $monthlyIncomes = [];
+// $monthlyExpences = [];
 
-for ($m = 1; $m <= 12; $m++) {
-    $income = $statistic->getMonthlyTotal('incomes',$m) ?? 0;
-    $monthlyIncomes[] = $income;
+// for ($m = 1; $m <= 12; $m++) {
+//     $income = $statistic->getMonthlyTotal('incomes',$m) ?? 0;
+//     $monthlyIncomes[] = $income;
 
-    $expense = $statistic->getMonthlyTotal('expences',$m) ?? 0;
-    $monthlyExpences[] = $expense;
-}
+//     $expense = $statistic->getMonthlyTotal('expences',$m) ?? 0;
+//     $monthlyExpences[] = $expense;
+// }
 ?>
 
   <script>
-const monthlyIncomes = <?php echo json_encode($monthlyIncomes); ?>;
-const monthlyExpences = <?php echo json_encode($monthlyExpences); ?>;
+const monthlyIncomes = <?php// echo json_encode($monthlyIncomes); ?>;
+const monthlyExpences = <?php// echo json_encode($monthlyExpences); ?>;
 
 const ctx = document.getElementById('myChart').getContext('2d');
 
@@ -221,5 +174,5 @@ new Chart(ctx, {
 </script>
 
 
-  <script src="../assets/script.js"></script>
+  <script src="/Money-Wise_1.0/public/assets/script.js"></script>
 </body>

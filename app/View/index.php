@@ -77,7 +77,7 @@
         class="py-1 px-2 bg-green-500 text-white text-xl font-bold rounded-md cursor-pointer xl:text-3xl">LOGIN</button>
     </div>
   </section>
-  <script src="/Money-Wise%20_1.0/public/assets/script.js"></script>
+  <script src="/Money-Wise_1.0/public/assets/script.js"></script>
 </body>
 
 </html>

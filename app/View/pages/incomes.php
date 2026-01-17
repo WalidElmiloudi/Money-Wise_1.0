@@ -1,15 +1,8 @@
 <?php
-
-    use Controllers\Income;
-
     if(!isset($_SESSION['userID'])){
   header("Location: /Money-Wise_1.0/Home/index");
   exit;
 }
-$userID = $_SESSION['userID'];
-
-$object = new Income($userID,0,"","");
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,10 +45,10 @@ $object = new Income($userID,0,"","");
   </section>
   <main class="w-full h-full flex flex-col xl:flex-row gap-4">
     <div class="hidden w-[30%] bg-white h-full xl:flex flex-col justify-center gap-20 pl-10">
-      <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="home.php">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="dashboard.php">Dashboard</a></h1>
+      <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/home/home/">Home</a></h1>
+        <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/dashboard/index">Dashboard</a></h1>
         <h1 class=" text-4xl font-bold rounded-full py-2 px-4 w-fit bg-gray-800 text-white"><a href="#">Incomes</a></h1>
-        <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="expences.php">Expences</a></h1>
+        <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/expence/index/">Expences</a></h1>
         <h1 class="text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white flex items-center justify-center cursor-pointer"><i class="fi fi-rs-sign-out-alt"></i><a href="../controllers/logout.php">LOGOUT</a></h1>
     </div>
     <div class ="w-full h-full bg-[#f2f4f7] flex justify-center items-center">
@@ -186,55 +179,55 @@ $object = new Income($userID,0,"","");
            </div>
            <div class="w-full h-full  overflow-scroll [scrollbar-width:none]">
                      <div class="w-full grid grid-cols-10 grid-rows-1 py-2 px-1 bg-[#f2f4f7]">
-                       <?php $id = 0;
-                           if (isset($_SESSION['filteredArray'])) {
-                               foreach ($_SESSION['filteredArray'] as $row) {
-
-                                   $id = $row['id'];
+                       <?php 
+                          //  $id = 0;
+                          //  if (isset($_SESSION['filteredArray'])) {
+                               foreach ($incomes as $income) {
                                ?>
-            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $row['montant'] ?>$</div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $row['category'] ?></div>
-            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $row['description'] ?></div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $row['date'] ?></div>
-            <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
-              <button id="btn" onclick="deleteModal(<?php echo $id ?>,'incomes')"
-            class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
-            delete
-        </button>
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $row['montant'] ?>,'<?php echo $row['description'] ?>','incomes','<?php echo $row['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
-            edit
-        </button>
-            </div>
-            <?php
-                    }
-                } else {
-                    $incomes = $object->getAll();
-                      unset($_SESSION['backup']);
-                        foreach($incomes as $income) {
-                          $_SESSION['backup'][]=$income;
-                            $id = $income['id'];
-                        ?>
             <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $income['montant'] ?>$</div>
             <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $income['category'] ?></div>
             <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $income['description'] ?></div>
             <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $income['date'] ?></div>
             <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
-              <button id="btn" onclick="deleteModal(<?php echo $id ?>,'incomes')"
+              <button id="btn" onclick="deleteModal(<?=$income['id'] ?>,'income')"
             class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
             delete
         </button>
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $income['montant'] ?>,'<?php echo $income['description'] ?>','incomes','<?php echo $income['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+        <button onclick="editModal(<?= $income['id'] ?>,<?= $income['montant'] ?>,'<?= $income['description'] ?>','income','<?= $income['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
             edit
         </button>
             </div>
-            <?php }}
+            <?php
+                    }
+                // } else {
+                    // $incomes = $object->getAll();
+                    //   unset($_SESSION['backup']);
+                    //     foreach($incomes as $income) {
+                    //       $_SESSION['backup'][]=$income;
+                    //         $id = $income['id'];
+                        ?>
+            <!-- <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $income['montant'] ?>$</div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $income['category'] ?></div>
+            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $income['description'] ?></div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $income['date'] ?></div>
+            <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
+              <button id="btn" onclick="deleteModal(<?php// echo $id ?>,'incomes')"
+            class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
+            delete
+        </button>
+        <button onclick="editModal(<?php// echo $id ?>,<?php // echo $income['montant'] ?>,'<?php // echo $income['description'] ?>','incomes','<?php echo $income['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+            edit
+        </button>
+            </div> -->
+            <?php 
+            // }}
                         
               
-                if(isset($_SESSION['filteredArray'])){
-                  $_SESSION['backup'] = $_SESSION['filteredArray'];
-                }
+                // if(isset($_SESSION['filteredArray'])){
+                //   $_SESSION['backup'] = $_SESSION['filteredArray'];
+                // }
                 
-                unset($_SESSION['filteredArray']);;
+                // unset($_SESSION['filteredArray']);;
             ?>
            </div>
           </div>
@@ -249,7 +242,7 @@ $object = new Income($userID,0,"","");
       aria-hidden="true">
       <div
         class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
-        <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="../controllers/incomeHandler.php" method="post">
+        <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="/Money-Wise_1.0/income/save/" method="post">
           <label for="amount" class="text-xl font-bold text-[#021c3b] self-start pl-8 xl:pl-16 2xl:pl-20">Amount
             :</label>
           <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
@@ -292,6 +285,6 @@ $object = new Income($userID,0,"","");
       </div>
     </section>
   </main>
-  <script src="../assets/script.js"></script>
+  <script src="/Money-Wise_1.0/public/assets/script.js"></script>
 </body>
 </html>

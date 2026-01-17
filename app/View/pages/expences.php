@@ -1,14 +1,8 @@
 <?php
-
-use Controllers\Expence;
-
-    session_start();
-    if(!isset($_SESSION['userID'])){
-  header("Location: /Money-Wise_1.0/Home/index");
-  exit;
-}
-$userID = $_SESSION['userID'];
-$object = new Expence($userID,0,'','');
+    if(!isset($_SESSION['userID'])) {
+        header("Location: /Money-Wise_1.0/Home/index");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,9 +45,9 @@ $object = new Expence($userID,0,'','');
   </section>
   <main id="expences" class="w-full h-full flex flex-col xl:flex-row  gap-4">
     <div class="hidden w-[30%] bg-white h-full xl:flex flex-col justify-center gap-20 pl-10">
-      <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="home.php">Home</a></h1>
-        <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="dashboard.php">Dashboard</a></h1>
-        <h1 class=" text-4xl font-bold  py-2 px-4 w-fit  hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="incomes.php">Incomes</a></h1>
+      <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/home/home/">Home</a></h1>
+        <h1 class=" text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/dashboard/index">Dashboard</a></h1>
+        <h1 class=" text-4xl font-bold  py-2 px-4 w-fit  hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white"><a href="/Money-Wise_1.0/income/index/">Incomes</a></h1>
         <h1 class=" text-4xl font-bold text-white bg-gray-800 rounded-full py-2 px-4 w-fit"><a href="#">Expences</a></h1>
         <h1 class="text-4xl font-bold text-[#021c3b] py-2 px-4 w-fit hover:bg-gray-500 hover:scale-110 hover:text-gray-800 rounded-full ease-in-out duration-150 active:bg-gray-800 active:text-white flex items-center justify-center cursor-pointer"><i class="fi fi-rs-sign-out-alt"></i><a href="../controllers/logout.php">LOGOUT</a></h1>
     </div>
@@ -170,54 +164,51 @@ $object = new Expence($userID,0,'','');
            </div>
            <div class="w-full h-full  overflow-scroll [scrollbar-width:none]">
                      <div class="w-full grid grid-cols-10 grid-rows-1 py-2 px-1 bg-[#f2f4f7]">
-                       <?php $id     = 0;
-                       if(isset($_SESSION['filteredArray'])){
-                        foreach($_SESSION['filteredArray'] as $row){
-                          
-                      $id = $row['id'];
-                  ?>
-            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $row['montant'] ?>$</div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $row['category'] ?></div>
-            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $row['description'] ?></div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $row['date'] ?></div>
+                       <?php 
+                        foreach($expences as $expence){
+                       ?>
+            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?= $expence['montant'] ?>$</div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?= $expence['category'] ?></div>
+            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?= $expence['description'] ?></div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?= $expence['date'] ?></div>
             <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
-              <button id="btn" onclick="deleteModal(<?php echo $id ?>,'expences')"
+              <button id="btn" onclick="deleteModal(<?= $expence['id'] ?>,'expence')"
             class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
             delete
         </button>
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $row['montant'] ?>,'<?php echo $row['description'] ?>','expences','<?php echo $row['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+        <button onclick="editModal(<?= $expence['id'] ?>,<?= $expence['montant'] ?>,'<?= $expence['description'] ?>','expence','<?= $expence['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
             edit
         </button>
             </div>
             <?php  
           }
-            } else{   
+            // } else{   
                
-                    $expences = $object->getAll();
-                      unset($_SESSION['backup']);
-                        foreach($expences as $expence)  {
-                    $_SESSION['backup'][] = $expence;
-                      $id = $expence['id'];
+            //         $expences = $object->getAll();
+            //           unset($_SESSION['backup']);
+            //             foreach($expences as $expence)  {
+            //         $_SESSION['backup'][] = $expence;
+            //           $id = $expence['id'];
                   ?>
-            <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php echo $expence['montant'] ?>$</div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php echo $expence['category'] ?></div>
-            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php echo $expence['description'] ?></div>
-            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php echo $expence['date'] ?></div>
+            <!-- <div class="col-span-2 text-green-600  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words"><?php // echo $expence['montant'] ?>$</div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex justify-center"><?php// echo $expence['category'] ?></div>
+            <div class="col-span-2  text-[7px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words "><?php// echo $expence['description'] ?></div>
+            <div class="col-span-2  text-[8px] xl:text-base 2xl:text-xl text-start font-bold border-b border-black  p-1 break-words flex items-center justify-center"><?php// echo $expence['date'] ?></div>
             <div class="col-span-2  text-start font-bold border-b border-black  p-1 break-words flex justify-center xl:justify-around gap-1">
-              <button id="btn" onclick="deleteModal(<?php echo $id ?>,'expences')"
+              <button id="btn" onclick="deleteModal(<?php// echo $id ?>,'expences')"
             class=" text-red-500 font-bold text-[7px] xl:text-base 2xl:text-xl cursor-pointer">
             delete
         </button>
-        <button onclick="editModal(<?php echo $id ?>,<?php echo $expence['montant'] ?>,'<?php echo $expence['description'] ?>','expences','<?php echo $expence['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
+        <button onclick="editModal(<?php// echo $id ?>,<?php// echo $expence['montant'] ?>,'<?php// echo $expence['description'] ?>','expences','<?php //echo $expence['category'] ?>')" class="text-green-500 font-bold text-[7px] xl:text-base 2xl:text-xl  cursor-pointer">
             edit
         </button>
-            </div>
-            <?php }
-                }
-                if(isset($_SESSION['filteredArray'])){
-                  $_SESSION['backup'] = $_SESSION['filteredArray'];
-                }
-                unset($_SESSION['filteredArray']);
+            </div> -->
+            <?php //}
+                // }
+                // if(isset($_SESSION['filteredArray'])){
+                //   $_SESSION['backup'] = $_SESSION['filteredArray'];
+                // }
+                // unset($_SESSION['filteredArray']);
                  ?>
            </div>
           </div>
@@ -232,7 +223,7 @@ $object = new Expence($userID,0,'','');
       aria-hidden="true">
       <div
         class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
-        <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="../controllers/expenceHandler.php" method="post">
+        <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="/Money-Wise_1.0/expence/save/" method="post">
           <label for="amount" class="text-xl font-bold text-[#021c3b] self-start pl-8 xl:pl-16 2xl:pl-20">Amount
             :</label>
           <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
@@ -275,6 +266,6 @@ $object = new Expence($userID,0,'','');
       </div>
     </section>
   </main>
-  <script src="../assets/script.js"></script>
+  <script src="/Money-Wise_1.0/public/assets/script.js"></script>
 </body>
 </html>

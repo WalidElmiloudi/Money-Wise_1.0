@@ -20,14 +20,4 @@ class HomeController extends Controller
     {
         $this->view('pages/dashboard');
     }
-
-    public function income(): void
-    {
-        $this->view('pages/incomes');
-    }
-
-    public function expence(): void
-    {
-        $this->view('pages/expences');
-    }
 }

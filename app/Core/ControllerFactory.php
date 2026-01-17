@@ -38,7 +38,7 @@ class ControllerFactory
                                     break;
             case 'App\Controller\DashboardController' : return new $className(
                                                    new DashboardService(
-                                                           new ExpenceRepository($pdo),new IncomeRepository($pdo)
+                                                           new IncomeRepository($pdo),new ExpenceRepository($pdo),
                                                        )
                                                );
                                     break;

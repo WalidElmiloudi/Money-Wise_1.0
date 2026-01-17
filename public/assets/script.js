@@ -21,6 +21,8 @@ const filter = document.getElementById("filter");
 const sort = document.getElementById("sort");
 const typeSelect = document.getElementById("typeSelect");
 let selectContainer = document.getElementById("selectContainer");
+const categoryTotalForm = document.getElementById("category-total-form");
+const categoryTotalResultContainer = document.getElementById("category-total-result-container");
 
 if (openLoginModal) {
   openLoginModal.addEventListener("click", () => {
@@ -95,8 +97,8 @@ function deleteModal(id,table){
     newSection.innerHTML = `<div class="w-70 h-50 bg-slate-100 rounded-md flex flex-col items-center justify-center gap-4">
         <p class="text-3xl font-bold text-[#021c3b]">Are you sure ?</p>
         <div class=" w-50 flex justify-between items-center">
-          <a href="../views/${table}.php"><button class="py-1 px-2 rounded-md bg-green-400 text-white text-2xl font-bold cursor-pointer">Cancel</button></a>
-          <a href="../controllers/delete.php?id=${id}&target=${table}"><button class="py-1 px-2 rounded-md bg-red-500 text-white text-2xl font-bold cursor-pointer">Delete</button></a>
+          <a href="/Money-Wise_1.0/${table}/index/"><button class="py-1 px-2 rounded-md bg-green-400 text-white text-2xl font-bold cursor-pointer">Cancel</button></a>
+          <a href="/Money-Wise_1.0/${table}/delete/${id}""><button class="py-1 px-2 rounded-md bg-red-500 text-white text-2xl font-bold cursor-pointer">Delete</button></a>
         </div>
       </div>`;
   main.appendChild(newSection);
@@ -105,9 +107,9 @@ function editModal(id,amount,description,table,category){
 
    const newSection = document.createElement("section");
     newSection.classList.add("fixed", "w-full", "h-full", "bg-black/20", "backdrop-filter", "backdrop-blur-xs", "flex", "justify-center", "items-center","overlay");
-    if(table === "incomes"){
+    if(table === "income"){
       newSection.innerHTML = `<div class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
-      <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="../controllers/edit.php?id=${id}&target=${table}" method="post">
+      <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="/Money-Wise_1.0/${table}/update/${id}" method="post">
         <label for="amount" class="text-xl font-bold text-[#021c3b] self-start pl-8 xl:pl-16 2xl:pl-20">Amount :</label>
         <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
           title="ex : x.xx" value="${amount}">
@@ -143,12 +145,12 @@ function editModal(id,amount,description,table,category){
           id="description">${description}</textarea>
         <button type="submit" class="cursor-pointer py-1 px-2 bg-green-600 text-white rounded-md xl:text-xl font-bold">EDIT</button>
       </form>
-      <a href="../views/${table}.php"><button
+      <a href="/Money-Wise_1.0/${table}/index/"><button
         class="cursor-pointer w-10 h-10 bg-red-500 text-white text-xl font-bold rounded-full absolute -top-2 -right-2 xl:text-2xl">X</button></a>
     </div>`;
     } else{
       newSection.innerHTML = `<div class="w-[80%] h-[60%] xl:w-[50%] 2xl:w-[40%] bg-slate-100 rounded-md shadow-xl flex items-center justify-center relative">
-      <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="../controllers/edit.php?id=${id}&target=${table}" method="post">
+      <form class="flex flex-col w-full h-full items-center justify-center gap-3 2xl:gap-5" action="/Money-Wise_1.0/${table}/update/${id}" method="post">
         <label for="amount" class="text-xl font-bold text-[#021c3b] self-start pl-8 xl:pl-16 2xl:pl-20">Amount :</label>
         <input class="py-2 pl-2 w-[80%] bg-white rounded-md" type="number" name="amount" id="amount" step="0.01"
           title="ex : x.xx" value="${amount}">
@@ -184,7 +186,7 @@ function editModal(id,amount,description,table,category){
           id="description">${description}</textarea>
         <button type="submit" class="cursor-pointer py-1 px-2 bg-green-600 text-white rounded-md xl:text-xl font-bold">EDIT</button>
       </form>
-      <a href="../views/${table}.php"><button
+      <a href="/Money-Wise_1.0/${table}/index/"><button
         class="cursor-pointer w-10 h-10 bg-red-500 text-white text-xl font-bold rounded-full absolute -top-2 -right-2 xl:text-2xl">X</button></a>
     </div>`;
     }
@@ -212,7 +214,7 @@ if(typeSelect){
     selectValue = e.target.value;
     selectContainer = document.getElementById("selectContainer");
     switch(selectValue){
-      case 'incomes' : 
+      case 'income' : 
                       selectContainer.innerHTML = `<label for="category"
             class="text-2xl font-bold">Category :</label>
           <select class="text-2xl bg-[#f5f5f5] h-15 rounded-md" name="category" id="category">
@@ -241,7 +243,7 @@ if(typeSelect){
           </select>`
 
       break;
-      case 'expences' : 
+      case 'expence' : 
                       selectContainer.innerHTML = `<label class="text-2xl font-bold" for="Category">Category :</label>
                     <select class="text-2xl bg-[#f5f5f5] h-15 rounded-md" name="category" id="category">
             <option value="Housing"
@@ -274,3 +276,16 @@ if(typeSelect){
     }
 })
 }
+
+categoryTotalForm.addEventListener("submit",function(e){
+  e.preventDefault();
+  const formData = new FormData(this);
+      fetch("/Money-Wise_1.0/dashboard/getCategoryTotal/",{
+          method : "post",
+          body   :  formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        categoryTotalResultContainer.innerHTML = data.total+'$';
+      } )
+})
